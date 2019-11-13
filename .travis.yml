@@ -3,5 +3,5 @@ jdk:
   - openjdk8
 sudo: false
 script: 
-- cd /backend
+- cd /home/travis/build/fpmi-hci-2019/pchmi-gr12-randomeal/backend
 - mvn test
