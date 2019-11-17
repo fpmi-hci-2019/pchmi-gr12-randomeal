@@ -1,10 +1,14 @@
-import org.junit.Assert;
+import gr12.hci.Application;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
 public class Test {
 
     @org.junit.Test
-    public void testSay() {
-        Sample sample = new Sample();
-        Assert.assertEquals("Hey", sample.say("Hey"));
+    public void test() {
+
     }
 }
