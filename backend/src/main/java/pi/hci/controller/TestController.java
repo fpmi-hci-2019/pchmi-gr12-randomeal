@@ -1,6 +1,6 @@
-package gr12.hci.controller;
+package pi.hci.controller;
 
-import gr12.hci.service.TestService;
+import pi.hci.service.TestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;

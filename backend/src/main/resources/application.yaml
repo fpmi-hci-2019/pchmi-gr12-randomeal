@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/HEAT_DB
+    jdbc-url: jdbc:postgresql://localhost:5432/randomeal_db
     username: postgres
-    password: password
-  #flyway:
-   # baseline-on-migrate: true
+    password: 123456Ab
+  flyway:
+    baseline-on-migrate: true

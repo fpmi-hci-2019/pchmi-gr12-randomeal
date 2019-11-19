@@ -1,4 +1,4 @@
-package gr12.hci.service;
+package pi.hci.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
