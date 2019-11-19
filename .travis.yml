@@ -8,4 +8,4 @@ branches:
    - master
 script: 
 - cd /home/travis/build/fpmi-hci-2019/pchmi-gr12-randomeal/backend
-- mvnw test
+- mvn test
