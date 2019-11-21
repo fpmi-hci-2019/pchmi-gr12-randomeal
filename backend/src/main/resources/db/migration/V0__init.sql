@@ -6,13 +6,13 @@ CREATE TABLE IF NOT EXISTS USERS (
   email VARCHAR(45) NULL UNIQUE,
   username VARCHAR(45) NULL UNIQUE,
   password VARCHAR(65) NOT NULL,
-  gender INT NOT NULL,
-  birthdate DATE NOT NULL);
+  gender VARCHAR(10),
+  birthdate DATE);
 
 -- -----------------------------------------------------
--- Table PARAMETERS
+-- Table SETTINGS
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS PARAMETERS (
+CREATE TABLE IF NOT EXISTS SETTINGS (
   id SERIAL PRIMARY KEY,
   user_id INT NOT NULL REFERENCES USERS,
   weight FLOAT NOT NULL,
