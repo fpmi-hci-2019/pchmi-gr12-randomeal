@@ -1,5 +1,8 @@
 package pi.hci.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Gender {
     UNKNOWN("UNEXPECTED_VALUE"),
     MALE("MALE"),
@@ -12,15 +15,17 @@ public enum Gender {
         this.value = value;
     }
 
-    public String value() {
+    @JsonValue
+    public String getValue() {
         return value;
     }
 
-   /* public Gender valueOf(String value) {
+    @JsonCreator
+    public Gender fromValue(String value) {
         for (Gender gender : Gender.values()) {
             if (gender.value.equals(value))
                 return gender;
         }
         return UNKNOWN;
-    }*/
+    }
 }

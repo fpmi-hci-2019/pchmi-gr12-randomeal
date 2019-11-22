@@ -7,10 +7,12 @@ import pi.hci.dao.UserDao;
 import pi.hci.dto.UserDto;
 import pi.hci.mapper.UserMapper;
 import pi.hci.model.User;
+import pi.hci.model.UserWithPassword;
 import pi.hci.utils.auth.AuthenticationUtils;
 
 import java.nio.charset.Charset;
 import java.security.spec.InvalidKeySpecException;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -28,6 +30,14 @@ public class UserService {
         userDto.setPassword(password);
         log.debug("Saving user <" + user.getUsername() + "> <" + password + ">.");
         return userDao.createUser(userDto);
+    }
+
+    public User login(UserWithPassword user) {
+        return mapper.fromDto(userDao.login(mapper.toDto(user)));
+    }
+
+    public List<User> getAllUsers() {
+        return mapper.fromDtoList(userDao.getAllUsers());
     }
 
     private String generatePassword() {

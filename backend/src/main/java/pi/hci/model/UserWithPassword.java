@@ -11,10 +11,6 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
-public class User {
-    private Long id;
-    private String username;
-    private String email;
-    private LocalDate birthDate;
-    private Gender gender;
+public class UserWithPassword extends User {
+    private String password;
 }

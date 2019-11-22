@@ -7,11 +7,15 @@ import org.springframework.stereotype.Component;
 import pi.hci.dao.UserDao;
 import pi.hci.dto.UserDto;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class UserDaoImpl implements UserDao {
-    private final String INSERT_USER_QUERY = "INSERT INTO USERS (email, username, password) " +
+    private final String INSERT_USER = "INSERT INTO USERS (email, username, password) " +
             "VALUES (:email, :username, :password)";
+    private final String SELECT_ALL_USERS = "SELECT * FROM USERS";
+    private final String FIND_BY_EMAIL_AND_PASSWORD = "SELECT * FROM USERS WHERE email=(:email) and password=(:password)";
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -22,7 +26,32 @@ public class UserDaoImpl implements UserDao {
                 .addValue("username", user.getUsername())
                 .addValue("password", user.getPassword());
 
-        return jdbcTemplate.update(INSERT_USER_QUERY, parameters);
+        return jdbcTemplate.update(INSERT_USER, parameters);
+    }
+
+    public UserDto login(UserDto user) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("email", user.getEmail())
+                .addValue("password", user.getPassword());
+
+        return jdbcTemplate.queryForObject(FIND_BY_EMAIL_AND_PASSWORD, parameters, (rs, rowNum) ->
+                new UserDto()
+                        .setId(rs.getLong("id"))
+                        .setUsername(rs.getString("username"))
+                        .setEmail(rs.getString("email"))
+                        .setBirthDate(rs.getDate("birthdate") != null ? rs.getDate("birthdate").toLocalDate() : null)
+                        .setGender(rs.getString("gender")));
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        return jdbcTemplate.query(SELECT_ALL_USERS, (rs, rowNum) ->
+                new UserDto()
+                        .setId(rs.getLong("id"))
+                        .setUsername(rs.getString("username"))
+                        .setEmail(rs.getString("email"))
+                        .setBirthDate(rs.getDate("birthdate") != null ? rs.getDate("birthdate").toLocalDate() : null)
+                        .setGender(rs.getString("gender")));
     }
 
 }
