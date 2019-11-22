@@ -74,3 +74,21 @@ Allows you to get all users.
 }
 ]
 ```
+
+### - v1/users/{userId}/boards GET
+
+Allows you to get all boards for specified user.
+
+**Output format**
+```
+[
+{
+  "name": "TestBoard",
+  "createdAt": "2019-11-22"
+},
+{
+  "name": "TestBoard2",
+  "createdAt": "2019-11-22"
+}
+]
+```

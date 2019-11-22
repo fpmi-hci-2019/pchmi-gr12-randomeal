@@ -4,12 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pi.hci.model.Board;
 import pi.hci.model.User;
 import pi.hci.model.UserWithPassword;
+import pi.hci.service.BoardService;
 import pi.hci.service.UserService;
 
 import java.util.List;
@@ -20,6 +19,7 @@ import java.util.List;
 @Slf4j
 public class UserController {
     private final UserService userService;
+    private final BoardService boardService;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -44,6 +44,11 @@ public class UserController {
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @RequestMapping(value = "/{userId}/boards", method = RequestMethod.GET)
+    public ResponseEntity<List<Board>> getAllBoardsForUser(@PathVariable Long userId) {
+        return new ResponseEntity<>(boardService.getAllBoardsForUser(userId), HttpStatus.OK);
     }
 }
 

@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDao {
                         .setId(rs.getLong("id"))
                         .setUsername(rs.getString("username"))
                         .setEmail(rs.getString("email"))
-                        .setBirthDate(rs.getDate("birthdate") != null ? rs.getDate("birthdate").toLocalDate() : null)
+                        .setBirthDate(rs.getDate("birthdate"))
                         .setGender(rs.getString("gender")));
     }
 
@@ -50,7 +50,7 @@ public class UserDaoImpl implements UserDao {
                         .setId(rs.getLong("id"))
                         .setUsername(rs.getString("username"))
                         .setEmail(rs.getString("email"))
-                        .setBirthDate(rs.getDate("birthdate") != null ? rs.getDate("birthdate").toLocalDate() : null)
+                        .setBirthDate(rs.getDate("birthdate"))
                         .setGender(rs.getString("gender")));
     }
 
