@@ -67,16 +67,4 @@ public class BoardsController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't delete board: " + boardId, ex);
         }
     }
-
-    @RequestMapping(value = "/{userId}/fav/boards", method = RequestMethod.GET)
-    public ResponseEntity<List<Board>> getFavouriteBoardsForUser(@PathVariable Long userId) {
-        try {
-            List<Board> boards = boardService.getAllBoardsForUser(userId);
-            log.debug("All boards for user <id={}> : {}.", userId, boards);
-            return new ResponseEntity<>(boards, HttpStatus.OK);
-        } catch (Exception ex) {
-            log.debug("Exception while getting all boards: {}.", ex.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Getting all boards failed.", ex);
-        }
-    }
 }
