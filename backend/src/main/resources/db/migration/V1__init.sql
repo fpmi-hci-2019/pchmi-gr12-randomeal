@@ -38,6 +38,8 @@ CREATE TABLE IF NOT EXISTS DISHES (
   description VARCHAR(500) NOT NULL,
   category INT NOT NULL,
   meal_type_mask BYTEA NOT NULL,
+  cooking_time INT NOT NULL,
+  complexity INT NOT NULL,
   photo_url VARCHAR(100) NULL);
 
 -- -----------------------------------------------------
@@ -67,11 +69,17 @@ CREATE TABLE IF NOT EXISTS EXCLUDED_INGREDIENTS(
   PRIMARY KEY (user_id, ingredient_id));
 
 -- -----------------------------------------------------
--- Table MEALS
+-- Table BOARDS
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS MEALS (
+CREATE TABLE IF NOT EXISTS BOARDS (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR NOT NULL,
+  created_at DATE NOT NULL DEFAULT NOW());
+
+-- -----------------------------------------------------
+-- Table USERS_BOARDS
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS USERS_BOARDS (
   user_id INT NOT NULL REFERENCES USERS,
-  dish_id INT NULL REFERENCES DISHES,
-  date DATE NOT NULL,
-  type INT NOT NULL,
-  PRIMARY KEY (user_id, dish_id));
+  board_id INT NULL REFERENCES BOARDS(id),
+  PRIMARY KEY (user_id, board_id));

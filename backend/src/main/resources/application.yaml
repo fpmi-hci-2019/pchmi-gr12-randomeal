@@ -1,7 +1,10 @@
 spring:
   datasource:
-    jdbc-url: jdbc:postgresql://localhost:5432/randomeal_db
+    url: jdbc:postgresql://localhost:5432/randomeal_db
     username: postgres
-    password: 123456Ab
+    password: password
   flyway:
     baseline-on-migrate: true
+logging:
+  level:
+    pi.hci: debug
