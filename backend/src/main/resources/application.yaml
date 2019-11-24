@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/randomeal_db
+    jdbc-url: jdbc:postgresql://localhost:5432/randomeal_db
     username: postgres
     password: password
   flyway:
