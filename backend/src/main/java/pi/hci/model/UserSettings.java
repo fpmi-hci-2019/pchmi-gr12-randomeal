@@ -1,12 +1,13 @@
 package pi.hci.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
+@Accessors(chain = true)
 public class UserSettings {
     private double weight;
     private double height;

@@ -1,19 +1,18 @@
 package pi.hci.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Accessors(chain = true)
 public class User {
     private Long id;
+    @NotNull
     private String username;
+    @NotNull
     private String email;
     private LocalDate birthDate;
     private Gender gender;
