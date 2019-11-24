@@ -3,11 +3,13 @@ package pi.hci.dao.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Component;
 import pi.hci.dao.UserDao;
 import pi.hci.dto.UserDto;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -26,7 +28,9 @@ public class UserDaoImpl implements UserDao {
                 .addValue("username", user.getUsername())
                 .addValue("password", user.getPassword());
 
-        return jdbcTemplate.update(INSERT_USER, parameters);
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(INSERT_USER, parameters, keyHolder, new String[]{"id"});
+        return (int) Optional.of(keyHolder.getKey()).orElse(-1);
     }
 
     public UserDto login(UserDto user) {

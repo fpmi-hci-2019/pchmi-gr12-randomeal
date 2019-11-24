@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pi.hci.dao.UserDao;
 import pi.hci.dto.UserDto;
 import pi.hci.mapper.UserMapper;
+import pi.hci.model.Id;
 import pi.hci.model.User;
 import pi.hci.model.UserWithPassword;
 import pi.hci.utils.auth.AuthenticationUtils;
@@ -24,19 +25,22 @@ public class UserService {
     private final UserDao userDao;
     private final UserMapper mapper;
 
-    public int createUser(User user) {
+    public Id createUser(User user) {
         String password = generatePassword();
         UserDto userDto = mapper.toDto(user);
         userDto.setPassword(password);
-        log.debug("Saving user <" + user.getUsername() + "> <" + password + ">.");
-        return userDao.createUser(userDto);
+        log.debug("Creating new user <{}> <{}>", user.getUsername(), password);
+        int createdId = userDao.createUser(userDto);
+        return new Id(createdId);
     }
 
     public User login(UserWithPassword user) {
+        log.debug("Login user <email={}>", user.getEmail());
         return mapper.fromDto(userDao.login(mapper.toDto(user)));
     }
 
     public List<User> getAllUsers() {
+        log.debug("Getting all users.");
         return mapper.fromDtoList(userDao.getAllUsers());
     }
 
