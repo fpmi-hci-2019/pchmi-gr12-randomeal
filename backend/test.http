@@ -2,3 +2,52 @@ GET localhost:8080/v1/test/
 Content-Type: application/json
 
 ###
+
+POST localhost:8080/v1/users/
+Content-Type: application/json
+
+{
+  "username": "test16",
+  "email": "test16"
+}
+
+###
+
+GET localhost:8080/v1/users/
+Content-Type: application/json
+
+###
+
+POST localhost:8080/v1/users/login
+Content-Type: application/json
+
+{
+   "email": "test1",
+   "password": "test"
+}
+
+###
+
+GET localhost:8080/v1/users/1/boards
+Content-Type: application/json
+
+###
+
+POST localhost:8080/v1/users/14/boards
+Content-Type: application/json
+
+{
+"name": "Board23"
+}
+
+###
+
+POST localhost:8080/v1/users/14/boards/23/fav
+Content-Type: application/json
+
+###
+
+DELETE localhost:8080/v1/users/15/boards/19
+Content-Type: application/json
+
+###
