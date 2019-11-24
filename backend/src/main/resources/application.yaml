@@ -5,3 +5,6 @@ spring:
     password: password
   flyway:
     baseline-on-migrate: true
+logging:
+  level:
+    pi.hci: debug
