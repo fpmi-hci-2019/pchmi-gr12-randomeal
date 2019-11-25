@@ -28,7 +28,7 @@ public class BoardsController {
             return new ResponseEntity<>(created, HttpStatus.CREATED);
         } catch (Exception ex) {
             log.debug("Exception while creating board {} for user {} : {}", board.getName(), userId, ex.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't create board for user " + userId, ex);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't create the board for user " + userId, ex);
         }
     }
 
@@ -51,8 +51,8 @@ public class BoardsController {
             boardService.setBoardIsFav(boardId, userId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
-            log.debug("Exception while performing operation with board <id={}>: {}", boardId, ex.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't perform operation with board: " + boardId, ex);
+            log.debug("Exception while performing operation with the board <id={}>: {}", boardId, ex.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't perform operation with the board: " + boardId, ex);
         }
     }
 
@@ -64,7 +64,7 @@ public class BoardsController {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
             log.debug("Exception while deleting board <id={}>: {}", boardId, ex.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't delete board: " + boardId, ex);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't delete the board: " + boardId, ex);
         }
     }
 }

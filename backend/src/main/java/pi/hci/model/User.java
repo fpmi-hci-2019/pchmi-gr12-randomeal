@@ -2,6 +2,7 @@ package pi.hci.model;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import pi.hci.model.enums.Gender;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;

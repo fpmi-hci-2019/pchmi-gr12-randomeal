@@ -54,7 +54,7 @@ public class BoardDaoImpl implements BoardDao {
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(INSERT_BOARD, parameters, keyHolder, new String[]{"id"});
-        return (int) Optional.of(keyHolder.getKey()).orElse(-1);
+        return (int) Optional.ofNullable(keyHolder.getKey()).orElse(-1);
     }
 
     @Override
