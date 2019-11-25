@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pi.hci.model.Board;
+import pi.hci.model.BoardWithDishes;
 import pi.hci.model.Id;
 import pi.hci.service.BoardService;
 
@@ -33,9 +34,9 @@ public class BoardsController {
     }
 
     @RequestMapping(value = "/{userId}/boards", method = RequestMethod.GET)
-    public ResponseEntity<List<Board>> getBoardsListForUser(@PathVariable Long userId) {
+    public ResponseEntity<List<BoardWithDishes>> getBoardsListForUser(@PathVariable Long userId) {
         try {
-            List<Board> boards = boardService.getAllBoardsForUser(userId);
+            List<BoardWithDishes> boards = boardService.getAllBoardsForUser(userId);
             log.debug("All boards for user <id={}> : {}.", userId, boards);
             return new ResponseEntity<>(boards, HttpStatus.OK);
         } catch (Exception ex) {

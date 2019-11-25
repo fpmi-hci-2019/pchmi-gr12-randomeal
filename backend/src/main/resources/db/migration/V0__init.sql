@@ -62,9 +62,9 @@ CREATE TABLE IF NOT EXISTS DISH_COMPONENTS
 );
 
 -- -----------------------------------------------------
--- Table PREFERENCES
+-- Table DISH_PREFERENCES
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS PREFERENCES
+CREATE TABLE IF NOT EXISTS DISH_PREFERENCES
 (
     user_id      INT     NOT NULL REFERENCES USERS,
     dish_id      INT     NOT NULL REFERENCES DISHES,
@@ -90,6 +90,16 @@ CREATE TABLE IF NOT EXISTS BOARDS
     id         SERIAL PRIMARY KEY,
     name       VARCHAR NOT NULL,
     created_at DATE    NOT NULL DEFAULT NOW()
+);
+
+-- -----------------------------------------------------
+-- Table BOARDS_DISHES
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS BOARDS_DISHES
+(
+    dish_id  INT NOT NULL REFERENCES DISHES (id),
+    board_id INT NOT NULL REFERENCES BOARDS (id),
+    PRIMARY KEY (dish_id, board_id)
 );
 
 -- -----------------------------------------------------

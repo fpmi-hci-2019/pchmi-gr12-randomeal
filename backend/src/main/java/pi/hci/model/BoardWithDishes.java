@@ -5,12 +5,13 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class BoardWithDishes {
+public class BoardWithDishes extends Board {
     @NotNull
-    private List<Dish> dishes;
+    private List<Dish> dishes = new ArrayList<>();
 }

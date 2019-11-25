@@ -8,6 +8,7 @@ import java.sql.Date;
 @Data
 @Accessors(chain = true)
 public class BoardDto {
+    private int id;
     private String name;
     private Date createdAt;
 }

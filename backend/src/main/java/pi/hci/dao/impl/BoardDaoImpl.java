@@ -32,8 +32,9 @@ public class BoardDaoImpl implements BoardDao {
         MapSqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("user_id", userId);
 
-        return jdbcTemplate.query(SELECT_ALL_FAVOURITE_BOARDS_FOR_USER, parameters, (rs, rowNum) ->
+        return jdbcTemplate.query(SELECT_ALL_BOARDS_FOR_USER, parameters, (rs, rowNum) ->
                 new BoardDto()
+                        .setId(rs.getInt("id"))
                         .setCreatedAt(rs.getDate("created_at"))
                         .setName(rs.getString("name"))
         );

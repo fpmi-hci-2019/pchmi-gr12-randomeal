@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pi.hci.dao.BoardDao;
 import pi.hci.mapper.BoardMapper;
 import pi.hci.model.Board;
+import pi.hci.model.BoardWithDishes;
 import pi.hci.model.Id;
 
 import java.util.List;
@@ -17,11 +18,16 @@ import java.util.List;
 public class BoardService {
 
     private final BoardDao boardDao;
+    private final DishService dishService;
     private final BoardMapper mapper;
 
-    public List<Board> getAllBoardsForUser(Long userId) {
+    public List<BoardWithDishes> getAllBoardsForUser(Long userId) {
         log.debug("Getting all boards for user {}", userId);
-        return mapper.fromDtoList(boardDao.getAllBoardsForUser(userId));
+        List<BoardWithDishes> boards = mapper.fromDtoListWithDishes(boardDao.getAllBoardsForUser(userId));
+        for (BoardWithDishes board : boards) {
+            board.setDishes(dishService.getAllDishesForBoard(board.getId()));
+        }
+        return boards;
     }
 
     public int deleteBoard(int boardId) {
