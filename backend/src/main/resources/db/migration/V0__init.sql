@@ -87,9 +87,12 @@ CREATE TABLE IF NOT EXISTS EXCLUDED_INGREDIENTS
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS BOARDS
 (
-    id         SERIAL PRIMARY KEY,
-    name       VARCHAR NOT NULL,
-    created_at DATE    NOT NULL DEFAULT NOW()
+    id           SERIAL PRIMARY KEY,
+    name         VARCHAR   NOT NULL,
+    created_at   DATE      NOT NULL DEFAULT NOW(),
+    is_favourite BOOLEAN   NOT NULL DEFAULT FALSE,
+    changed_at   TIMESTAMP NOT NULL DEFAULT NOW(),
+    user_id      INT       NOT NULL REFERENCES USERS
 );
 
 -- -----------------------------------------------------
@@ -100,16 +103,4 @@ CREATE TABLE IF NOT EXISTS BOARDS_DISHES
     dish_id  INT NOT NULL REFERENCES DISHES (id),
     board_id INT NOT NULL REFERENCES BOARDS (id),
     PRIMARY KEY (dish_id, board_id)
-);
-
--- -----------------------------------------------------
--- Table USERS_BOARDS
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS USERS_BOARDS
-(
-    user_id      INT       NOT NULL REFERENCES USERS,
-    board_id     INT       NOT NULL REFERENCES BOARDS (id),
-    is_favourite BOOLEAN   NOT NULL DEFAULT FALSE,
-    changed_at   TIMESTAMP NOT NULL DEFAULT NOW(),
-    PRIMARY KEY (user_id, board_id)
 );

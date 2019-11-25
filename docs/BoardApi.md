@@ -1,6 +1,6 @@
 #Board API
 
-### — v1/users/{userId}/boards GET
+### — v1/boards?userId=* GET
 
 Allows you to get all boards with dishes for specified ```userId```.
 
@@ -11,12 +11,17 @@ Allows you to get all boards with dishes for specified ```userId```.
     "id": 2,
     "name": "Board23",
     "createdAt": "2019-11-25",
-    "dishes": []
+    "changedAt": "2019-11-25T11:17:59.398+0000",
+    "userId": 3,
+    "dishes": [],
+    "favourite": false
   },
   {
     "id": 3,
     "name": "Board2",
     "createdAt": "2019-11-25",
+    "changedAt": "2019-11-25T11:17:59.398+0000",
+    "userId": 3,
     "dishes": [
       {
         "id": 1,
@@ -26,19 +31,21 @@ Allows you to get all boards with dishes for specified ```userId```.
         "mealTypeMask": "MTAwMTA=",
         "photoUrl": null
       }
-    ]
+    ],
+    "favourite": false
   }
 ]
 ```
 
-### — v1/users/{userId}/boards POST
+### — v1/boards POST
 
 Allows you to create the new board for specified ```userId```.
 
 **Input format**
 ```
 {
-  "name": "TestBoard"
+  "name": "TestBoard",
+  "userId": 3
 }
 ```
 
@@ -49,18 +56,18 @@ Allows you to create the new board for specified ```userId```.
 }
 ```
 
-### — v1/users/{userId}/boards/{boardId} DELETE
+### — v1/boards/{boardId} DELETE
 
-Allows you to delete the board with ```boardId``` for specified ```userId```.
+Allows you to delete the board with ```boardId```.
 
 **Output format**
 ```
 Response code: 200;
 ```
 
-### — v1/users/{userId}/boards/{boardId}/fav POST
+### — v1/boards/{boardId}/fav POST
 
-Allows you to add/remove from favourites board with ```boardId``` for specified ```userId```.
+Allows you to add/remove from favourites board with ```boardId```.
 
 **Output format**
 ```

@@ -21,7 +21,7 @@ public class BoardService {
     private final DishService dishService;
     private final BoardMapper mapper;
 
-    public List<BoardWithDishes> getAllBoardsForUser(Long userId) {
+    public List<BoardWithDishes> getAllBoardsForUser(int userId) {
         log.debug("Getting all boards for user {}", userId);
         List<BoardWithDishes> boards = mapper.fromDtoListWithDishes(boardDao.getAllBoardsForUser(userId));
         for (BoardWithDishes board : boards) {
@@ -36,21 +36,19 @@ public class BoardService {
     }
 
     @Transactional
-    public Id createBoard(Board board, Long userId) {
-        log.debug("Creating board <name={}> for user <id={}>", board.getName(), userId);
-        int createdId = boardDao.createBoard(mapper.toDto(board));
-        boardDao.createUserBoard(createdId, userId);
-        return new Id(createdId);
+    public Id createBoard(Board board) {
+        log.debug("Creating board <name={}> for user <id={}>", board.getName(), board.getUserId());
+        return new Id(boardDao.createBoard(mapper.toDto(board)));
     }
 
     @Transactional
-    public int setBoardIsFav(int boardId, Long userId) {
-        boolean isFav = boardDao.getBoardIsFav(boardId, userId);
+    public int setBoardIsFav(int boardId) {
+        boolean isFav = boardDao.getBoardIsFav(boardId);
         if (isFav) {
             log.debug("Delete board <id={}> from favourites.", boardId);
         } else {
             log.debug("Add board <id={}> to favourites.", boardId);
         }
-        return boardDao.setBoardIsFav(boardId, userId, !isFav);
+        return boardDao.setBoardIsFav(boardId, !isFav);
     }
 }

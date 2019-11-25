@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(INSERT_USER, parameters, keyHolder, new String[]{"id"});
-        return (int) Optional.of(keyHolder.getKey()).orElse(-1);
+        return (int) Optional.ofNullable(keyHolder.getKey()).orElse(-1);
     }
 
     public UserDto login(UserDto user) {
@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
 
         return jdbcTemplate.queryForObject(FIND_BY_EMAIL_AND_PASSWORD, parameters, (rs, rowNum) ->
                 new UserDto()
-                        .setId(rs.getLong("id"))
+                        .setId(rs.getInt("id"))
                         .setUsername(rs.getString("username"))
                         .setEmail(rs.getString("email"))
                         .setBirthDate(rs.getDate("birthdate"))
@@ -51,7 +51,7 @@ public class UserDaoImpl implements UserDao {
     public List<UserDto> getAllUsers() {
         return jdbcTemplate.query(SELECT_ALL_USERS, (rs, rowNum) ->
                 new UserDto()
-                        .setId(rs.getLong("id"))
+                        .setId(rs.getInt("id"))
                         .setUsername(rs.getString("username"))
                         .setEmail(rs.getString("email"))
                         .setBirthDate(rs.getDate("birthdate"))

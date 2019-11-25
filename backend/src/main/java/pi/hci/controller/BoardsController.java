@@ -15,26 +15,25 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("v1/users")
+@RequestMapping("v1/boards")
 @RequiredArgsConstructor
 public class BoardsController {
     private final BoardService boardService;
 
-    @RequestMapping(value = "/{userId}/boards", method = RequestMethod.POST)
-    public ResponseEntity<Id> createBoard(@PathVariable Long userId,
-                                          @RequestBody Board board) {
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public ResponseEntity<Id> createBoard(@RequestBody Board board) {
         try {
-            Id created = boardService.createBoard(board, userId);
-            log.debug("Board <id={}> for user <id={}> created.", created.getId(), userId);
+            Id created = boardService.createBoard(board);
+            log.debug("Board <id={}> for user <id={}> created.", created.getId(), board.getUserId());
             return new ResponseEntity<>(created, HttpStatus.CREATED);
         } catch (Exception ex) {
-            log.debug("Exception while creating board {} for user {} : {}", board.getName(), userId, ex.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't create the board for user " + userId, ex);
+            log.debug("Exception while creating board {} for user {} : {}", board.getName(), board.getUserId(), ex.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't create the board for user " + board.getUserId(), ex);
         }
     }
 
-    @RequestMapping(value = "/{userId}/boards", method = RequestMethod.GET)
-    public ResponseEntity<List<BoardWithDishes>> getBoardsListForUser(@PathVariable Long userId) {
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity<List<BoardWithDishes>> getBoardsListForUser(@RequestParam int userId) {
         try {
             List<BoardWithDishes> boards = boardService.getAllBoardsForUser(userId);
             log.debug("All boards for user <id={}> : {}.", userId, boards);
@@ -45,11 +44,10 @@ public class BoardsController {
         }
     }
 
-    @RequestMapping(value = "/{userId}/boards/{boardId}/fav", method = RequestMethod.POST)
-    public ResponseEntity<HttpStatus> addToFavourite(@PathVariable Long userId,
-                                                     @PathVariable int boardId) {
+    @RequestMapping(value = "/{boardId}/fav", method = RequestMethod.POST)
+    public ResponseEntity<HttpStatus> addToFavourite(@PathVariable int boardId) {
         try {
-            boardService.setBoardIsFav(boardId, userId);
+            boardService.setBoardIsFav(boardId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
             log.debug("Exception while performing operation with the board <id={}>: {}", boardId, ex.getMessage());
@@ -57,9 +55,8 @@ public class BoardsController {
         }
     }
 
-    @RequestMapping(value = "/{userId}/boards/{boardId}", method = RequestMethod.DELETE)
-    public ResponseEntity<HttpStatus> deleteBoard(@PathVariable Long userId,
-                                                  @PathVariable int boardId) {
+    @RequestMapping(value = "/{boardId}", method = RequestMethod.DELETE)
+    public ResponseEntity<HttpStatus> deleteBoard(@PathVariable int boardId) {
         try {
             boardService.deleteBoard(boardId);
             return new ResponseEntity<>(HttpStatus.OK);

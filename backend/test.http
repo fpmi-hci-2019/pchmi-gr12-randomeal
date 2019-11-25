@@ -22,32 +22,33 @@ POST localhost:8080/v1/users/login
 Content-Type: application/json
 
 {
-   "email": "test1",
-   "password": "test"
+  "email": "test1",
+  "password": "test"
 }
 
 ###
 
-GET localhost:8080/v1/users/3/boards
+GET localhost:8080/v1/boards?userId=3
 Content-Type: application/json
 
 ###
 
-POST localhost:8080/v1/users/3/boards
+POST localhost:8080/v1/boards/
 Content-Type: application/json
 
 {
-"name": "Board2"
+  "name": "Board2",
+  "userId": 3
 }
 
 ###
 
-POST localhost:8080/v1/users/3/boards/3/fav
+POST localhost:8080/v1/boards/3/fav
 Content-Type: application/json
 
 ###
 
-DELETE localhost:8080/v1/users/15/boards/19
+DELETE localhost:8080/v1/boards/3
 Content-Type: application/json
 
 ###

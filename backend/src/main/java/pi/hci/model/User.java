@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Data
 @Accessors(chain = true)
 public class User {
-    private Long id;
+    private int id;
     @NotNull
     private String username;
     @NotNull
