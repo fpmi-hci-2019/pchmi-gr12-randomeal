@@ -1,4 +1,4 @@
-package pi.hci.model;
+package pi.hci.model.enums;
 
 public enum Gender {
     UNKNOWN("UNEXPECTED_VALUE"),
