@@ -1,8 +1,8 @@
 #User API
 
-### - v1/users/ POST
+### — v1/users/ POST
 
-Allows you to create new user with automatically generated password.
+Allows you to create new user with an automatically generated password.
 
 **Input format**
 ```
@@ -26,7 +26,7 @@ Allows you to create new user with automatically generated password.
 
 **Important**: *```username``` and ```email``` can be null*
 
-### - v1/users/login POST
+### — v1/users/login POST
 
 Allows you to login user.
 
@@ -49,7 +49,7 @@ Allows you to login user.
 }
 ```
 
-### - v1/users/ GET
+### — v1/users/ GET
 
 Allows you to get all users.
 
