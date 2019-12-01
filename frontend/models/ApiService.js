@@ -29,4 +29,9 @@ export class ApiService {
     console.log("Request all boards for user");
     return this.apiClient.get('boards?userId=' + userId);
   }
+
+  getAllFavBoardsForUser(userId) {
+    console.log("Request all fav boards for user");
+    return this.apiClient.get('boards?userId=' + userId + '&filterBy=fav');
+  }
 }

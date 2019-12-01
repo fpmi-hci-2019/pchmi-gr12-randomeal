@@ -34,17 +34,10 @@ export default class LoginScreen extends React.Component {
             .catch((error) => {
                 Alert.alert("Error", "Unexpected error!");
             });*/
-        this.props.navigation.navigate("Start", {}, {
-            type: "Navigate",
-            routeName: "MainTabs",
-            action: {
-                type: "Navigate",
-                routeName: "Main",
-                params: {
-                    userId: 1
-                }
-            }
-        });
+        this.props.navigation.navigate("Main",
+            {
+                userId: 1
+            });
     };
 
     focusTheField = (id) => {
@@ -67,16 +60,9 @@ export default class LoginScreen extends React.Component {
 
     showPassword = () => {
         if (this.state.isPressed === false)
-            this.setState({showPassword: false, isPressed: true})
+            this.setState({showPassword: false, isPressed: true});
         else
-            this.setState({showPassword: true, isPressed: false})
-    };
-
-    cardClick(boxId) {
-        this.props.navigation.navigate("Main",
-            {
-                userId: boxId
-            });
+            this.setState({showPassword: true, isPressed: false});
     };
 
     render() {
@@ -139,12 +125,11 @@ export default class LoginScreen extends React.Component {
                     </View>
 
                     <TouchableOpacity style={styles.loginBtn}>
-                        <Text style={styles.text} onPress={() => this.cardClick(1)}> Login </Text>
+                        <Text style={styles.text} onPress={() => this._login()}> Login </Text>
                     </TouchableOpacity>
                 </ImageBackground>
             </KeyboardAvoidingView>
-        )
-            ;
+        );
     }
 }
 

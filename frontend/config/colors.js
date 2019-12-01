@@ -4,11 +4,12 @@ const colors = {
    btnTextColor: '#F7CACB',
    textColor: '#000000',
    screenBackgroundColor: '#F3F7F8',
-   white: '#FFFFFF',
+   white: '#ffffff',
    textColorGray: '#C7C7CC',
    loginIconColor: '#273344',
    placeHolderColor: 'rgba(95, 103, 123, 0.5)',
    inputBoxColor: '#E5575A',
-   shadowColor: '#343232'
+   shadowColor: '#343232',
+   activeBackColor: "#E5575A"
  };
 export default colors;
