@@ -2,6 +2,7 @@ package pi.hci.model;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import pi.hci.model.enums.DishComplexityType;
 
 import javax.validation.constraints.NotNull;
 
@@ -18,4 +19,6 @@ public class Dish {
     @NotNull
     private byte[] mealTypeMask;
     private String photoUrl;
+    private DishComplexityType complexity;
+    private int cookingTime;
 }

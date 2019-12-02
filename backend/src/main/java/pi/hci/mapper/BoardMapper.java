@@ -21,5 +21,7 @@ public interface BoardMapper {
 
     List<BoardDto> toDtoListWithDishes(List<BoardWithDishes> boards);
 
+    BoardWithDishes fromDtoWithDishes(BoardDto dto);
+
     List<BoardWithDishes> fromDtoListWithDishes(List<BoardDto> dto);
 }

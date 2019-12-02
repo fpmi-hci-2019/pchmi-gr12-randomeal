@@ -55,6 +55,16 @@ public class BoardsController {
         }
     }
 
+    @RequestMapping(value = "/{boardId}/fav", method = RequestMethod.GET)
+    public ResponseEntity<Boolean> getBoardIsFav(@PathVariable int boardId) {
+        try {
+            return new ResponseEntity<>(boardService.getBoardIsFav(boardId), HttpStatus.OK);
+        } catch (Exception ex) {
+            log.debug("Exception while performing operation with the board <id={}>: {}", boardId, ex.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't perform operation with the board: " + boardId, ex);
+        }
+    }
+
     @RequestMapping(value = "/{boardId}", method = RequestMethod.DELETE)
     public ResponseEntity<HttpStatus> deleteBoard(@PathVariable int boardId) {
         try {
@@ -63,6 +73,16 @@ public class BoardsController {
         } catch (Exception ex) {
             log.debug("Exception while deleting board <id={}>: {}", boardId, ex.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't delete the board: " + boardId, ex);
+        }
+    }
+
+    @RequestMapping(value = "/{boardId}", method = RequestMethod.GET)
+    public ResponseEntity<Board> getBoard(@PathVariable int boardId) {
+        try {
+            return new ResponseEntity<>(boardService.getBoardById(boardId), HttpStatus.OK);
+        } catch (Exception ex) {
+            log.debug("Exception while deleting board <id={}>: {}", boardId, ex.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't get the board: " + boardId, ex);
         }
     }
 }
