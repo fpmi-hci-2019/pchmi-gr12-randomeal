@@ -21,4 +21,7 @@ public class DishService {
         return mapper.fromDtoList(dishDao.getAllDishesForBoard(boardId));
     }
 
+    public Dish getDishById(int dishId) {
+        return mapper.fromDto(dishDao.getDishByDishId(dishId));
+    }
 }

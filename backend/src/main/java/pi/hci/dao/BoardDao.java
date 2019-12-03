@@ -7,6 +7,8 @@ import java.util.List;
 public interface BoardDao {
     List<BoardDto> getAllBoardsForUser(int userId, String filterBy);
 
+    BoardDto getBoardById(int boardId);
+
     int deleteBoard(int boardId);
 
     int createBoard(BoardDto board);

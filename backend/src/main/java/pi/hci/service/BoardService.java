@@ -30,6 +30,13 @@ public class BoardService {
         return boards;
     }
 
+    public BoardWithDishes getBoardById(int boardId) {
+        log.debug("Getting board <id={}>", boardId);
+        BoardWithDishes board = mapper.fromDtoWithDishes(boardDao.getBoardById(boardId));
+        board.setDishes(dishService.getAllDishesForBoard(boardId));
+        return board;
+    }
+
     public int deleteBoard(int boardId) {
         log.debug("Deleting board <id={}>", boardId);
         return boardDao.deleteBoard(boardId);
@@ -50,5 +57,9 @@ public class BoardService {
             log.debug("Add board <id={}> to favourites.", boardId);
         }
         return boardDao.setBoardIsFav(boardId, !isFav);
+    }
+
+    public boolean getBoardIsFav(int boardId) {
+        return boardDao.getBoardIsFav(boardId);
     }
 }

@@ -12,4 +12,6 @@ public class DishDto {
     private String category;
     private byte[] mealTypeMask;
     private String photoUrl;
+    private String complexity;
+    private int cookingTime;
 }

@@ -22,6 +22,7 @@ public class BoardDaoImpl implements BoardDao {
     private final String INSERT_BOARD = "INSERT INTO BOARDS (name, user_id) VALUES (:name, :user_id)";
     private final String SELECT_BOARD_IS_FAV = "SELECT is_favourite FROM BOARDS WHERE id=(:id)";
     private final String SET_BOARD_IS_FAV = "UPDATE BOARDS SET is_favourite=(:is_fav), changed_at=(:changed_at) WHERE id=(:id)";
+    private final String SELECT_BOARD_BY_ID = "SELECT * FROM BOARDS WHERE id=(:id)";
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -32,6 +33,22 @@ public class BoardDaoImpl implements BoardDao {
                 .addValue("user_id", userId);
 
         return jdbcTemplate.query(onlyFav ? SELECT_ALL_FAVOURITE_BOARDS_FOR_USER : SELECT_ALL_BOARDS_FOR_USER, parameters, (rs, rowNum) ->
+                new BoardDto()
+                        .setId(rs.getInt("id"))
+                        .setCreatedAt(rs.getDate("created_at"))
+                        .setName(rs.getString("name"))
+                        .setChangedAt(rs.getTimestamp("changed_at"))
+                        .setFavourite(rs.getBoolean("is_favourite"))
+                        .setUserId(rs.getInt("user_id"))
+        );
+    }
+
+    @Override
+    public BoardDto getBoardById(int boardId) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("id", boardId);
+
+        return jdbcTemplate.queryForObject(SELECT_BOARD_BY_ID, parameters, (rs, rowNum) ->
                 new BoardDto()
                         .setId(rs.getInt("id"))
                         .setCreatedAt(rs.getDate("created_at"))
