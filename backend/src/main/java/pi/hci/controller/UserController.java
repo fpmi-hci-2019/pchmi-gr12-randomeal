@@ -17,7 +17,7 @@ import pi.hci.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("v1/users")
+@RequestMapping("randomeal/v1/users")
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {

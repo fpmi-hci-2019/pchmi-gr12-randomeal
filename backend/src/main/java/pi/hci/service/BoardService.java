@@ -21,9 +21,9 @@ public class BoardService {
     private final DishService dishService;
     private final BoardMapper mapper;
 
-    public List<BoardWithDishes> getAllBoardsForUser(int userId) {
+    public List<BoardWithDishes> getAllBoardsForUser(int userId, String filterBy) {
         log.debug("Getting all boards for user {}", userId);
-        List<BoardWithDishes> boards = mapper.fromDtoListWithDishes(boardDao.getAllBoardsForUser(userId));
+        List<BoardWithDishes> boards = mapper.fromDtoListWithDishes(boardDao.getAllBoardsForUser(userId, filterBy));
         for (BoardWithDishes board : boards) {
             board.setDishes(dishService.getAllDishesForBoard(board.getId()));
         }

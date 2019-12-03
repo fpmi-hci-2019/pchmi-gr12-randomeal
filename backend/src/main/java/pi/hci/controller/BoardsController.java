@@ -15,7 +15,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("v1/boards")
+@RequestMapping("randomeal/v1/boards")
 @RequiredArgsConstructor
 public class BoardsController {
     private final BoardService boardService;
@@ -33,9 +33,10 @@ public class BoardsController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<BoardWithDishes>> getBoardsListForUser(@RequestParam int userId) {
+    public ResponseEntity<List<BoardWithDishes>> getBoardsListForUser(@RequestParam int userId,
+                                                                      @RequestParam(required = false) String filterBy) {
         try {
-            List<BoardWithDishes> boards = boardService.getAllBoardsForUser(userId);
+            List<BoardWithDishes> boards = boardService.getAllBoardsForUser(userId, filterBy);
             log.debug("All boards for user <id={}> : {}.", userId, boards);
             return new ResponseEntity<>(boards, HttpStatus.OK);
         } catch (Exception ex) {
@@ -44,7 +45,7 @@ public class BoardsController {
         }
     }
 
-    @RequestMapping(value = "/{boardId}/fav", method = RequestMethod.POST)
+    @RequestMapping(value = "/{boardId}/fav", method = RequestMethod.PUT)
     public ResponseEntity<HttpStatus> addToFavourite(@PathVariable int boardId) {
         try {
             boardService.setBoardIsFav(boardId);

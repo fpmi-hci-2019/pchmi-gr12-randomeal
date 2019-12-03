@@ -26,11 +26,12 @@ public class BoardDaoImpl implements BoardDao {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public List<BoardDto> getAllBoardsForUser(int userId) {
+    public List<BoardDto> getAllBoardsForUser(int userId, String filterBy) {
+        boolean onlyFav = filterBy != null && filterBy.equals("fav");
         MapSqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("user_id", userId);
 
-        return jdbcTemplate.query(SELECT_ALL_BOARDS_FOR_USER, parameters, (rs, rowNum) ->
+        return jdbcTemplate.query(onlyFav ? SELECT_ALL_FAVOURITE_BOARDS_FOR_USER : SELECT_ALL_BOARDS_FOR_USER, parameters, (rs, rowNum) ->
                 new BoardDto()
                         .setId(rs.getInt("id"))
                         .setCreatedAt(rs.getDate("created_at"))

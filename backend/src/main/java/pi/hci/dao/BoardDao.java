@@ -5,7 +5,7 @@ import pi.hci.dto.BoardDto;
 import java.util.List;
 
 public interface BoardDao {
-    List<BoardDto> getAllBoardsForUser(int userId);
+    List<BoardDto> getAllBoardsForUser(int userId, String filterBy);
 
     int deleteBoard(int boardId);
 
