@@ -25,4 +25,32 @@ export class ApiClient {
                 console.log('Problems with POST method: ' + error.message)
             });
     }
+
+    delete(url) {
+        return fetch(this.HOST + url, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.json())
+            .catch((error) => {
+                console.log('Problems with DELETE method: ' + error.message)
+            });
+    }
+
+    put(url) {
+        return fetch(this.HOST + url, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.json())
+            .catch((error) => {
+                console.log('Problems with PUT method: ' + error.message)
+            });
+    }
 }

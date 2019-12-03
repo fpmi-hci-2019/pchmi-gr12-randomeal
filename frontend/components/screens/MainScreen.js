@@ -33,8 +33,53 @@ export default class MainScreen extends React.Component {
         this.userId = this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().getParam('userId');
         console.log("userId" + this.userId);
         this.state = {
-            boards: [],
-            //[{dishes: [{id: 1, name: 'box1', backgroundColor: '#09f', color: '#fff'}]}],
+            boards: [
+                {
+                    dishes: [
+                        {
+                            id: 1,
+                            name: 'box1',
+                            backgroundColor: '#09f',
+                            color: '#fff',
+                            photoUrl: 'https://cdn.pixabay.com/photo/2018/03/29/12/19/oats-3272113_1280.jpg'
+                        },
+                        {
+                            id: 2,
+                            name: 'box2',
+                            backgroundColor: '#09f',
+                            color: '#fff',
+                            photoUrl: 'https://cdn.pixabay.com/photo/2016/10/14/18/21/tee-1740871_1280.jpg'
+                        },
+                        {
+                            id: 3,
+                            name: 'box3',
+                            backgroundColor: '#09f',
+                            color: '#fff',
+                            photoUrl: 'https://cdn.pixabay.com/photo/2016/11/17/22/53/biscuit-1832917_1280.jpg'
+                        },
+                        {
+                            id: 4,
+                            name: 'box4',
+                            backgroundColor: '#09f',
+                            color: '#fff',
+                            photoUrl: 'https://cdn.pixabay.com/photo/2015/05/31/13/59/salad-791891_1280.jpg'
+                        },
+                        {
+                            id: 5,
+                            name: 'box5',
+                            backgroundColor: '#09f',
+                            color: '#fff',
+                            photoUrl: 'https://cdn.pixabay.com/photo/2016/11/01/11/37/soup-1787997_1280.jpg'
+                        },
+                        {
+                            id: 6,
+                            name: 'box6',
+                            backgroundColor: '#09f',
+                            color: '#fff',
+                            photoUrl: 'https://cdn.pixabay.com/photo/2016/08/23/15/52/fresh-orange-juice-1614822_1280.jpg'
+                        }]
+                },
+            ],
             isLoading: false
         };
         //this.getBoards(this.userId);
@@ -65,16 +110,12 @@ export default class MainScreen extends React.Component {
             return <ImageBackground style={styles.backgroundContainer} source={empty_back}>
                 <View style={styles.controlsContainer}>
                     <Text style={styles.lightTitle}>CREATE BOARD</Text>
-                    <TouchableOpacity
-                        onPress={() => alert("onPress")}>
-                        <Icon color={colors.loginIconColor} size={dimensions.SMALL_ICON_SIZE} name={'ios-add'}/>
-                        <Text>Login with Facebook</Text>
-                    </TouchableOpacity>
                 </View>
             </ImageBackground>
         } else {
-            return <View style={styles.backgroundContainer}>
+            return <View style={styles.listContainer}>
                 <FlatList
+                    scrollEnabled={false}
                     style={{marginTop: -dimensions.WINDOW_HEIGHT / 10}}
                     data={this.state.boards}
                     renderItem={
@@ -101,13 +142,17 @@ const styles = StyleSheet.create({
         flex: 1,
         width: null,
         height: null,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    listContainer: {
+        flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'stretch',
     },
     controlsContainer: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'stretch'
+        marginBottom: 20,
+        paddingTop: dimensions.WINDOW_HEIGHT / 4
     },
     infoText: {
         fontSize: fontSizes.titleSize,

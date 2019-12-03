@@ -1,5 +1,5 @@
 import React from "react";
-import {Alert, View, StyleSheet, Text} from "react-native";
+import {Alert, View, StyleSheet, Text, Image} from "react-native";
 import SortableGrid from "react-native-sortable-gridview";
 import colors from "../../config/colors";
 
@@ -17,13 +17,7 @@ export default class Dishes extends React.Component {
         console.log(this.props.data);
         return (
             <SortableGrid
-                data={this.state.data}/*{[
-                    {name: 'dish1', backgroundColor: '#09f', color: '#fff'},
-                    {name: 'dish2', backgroundColor: '#f60', color: '#fff'},
-                    {name: 'dish3', backgroundColor: '#333', color: '#fff'},
-                    {name: 'dish4', backgroundColor: '#rgba(255, 216, 58, 1)', color: '#333'},
-                    {name: 'dish5', backgroundColor: '#rgba(0, 222, 144, 1)', color: '#fff'},
-                ]}*/
+                data={this.state.data}
                 lockData={this.state.lockData}
                 onDragStart={() => {
                     console.log('Default onDragStart');
@@ -38,9 +32,10 @@ export default class Dishes extends React.Component {
                             onTap={() => {
                                 Alert.alert(`On Tap ${item.name}!`);
                             }}
-                            style={[styles.item, {backgroundColor: item.backgroundColor}]}
+                            style={styles.item}
                         >
-                            <Text style={[{color: item.color}]}>{item.name}</Text>
+                            <Image style={styles.item}
+                                   source={{uri: item.photoUrl}}/>
                         </View>
                     )
                 }}
@@ -51,9 +46,10 @@ export default class Dishes extends React.Component {
                             onTap={() => {
                                 Alert.alert(`On Tap ${item.name}!`);
                             }}
-                            style={[styles.item, {backgroundColor: item.backgroundColor}]}
+                            style={[styles.item]}
                         >
-                            <Text style={[{color: item.color}]}>{item.name}</Text>
+                            <Image style={styles.item}
+                                   source={{uri: item.photoUrl}}/>
                         </View>
                     )
                 }}
@@ -78,7 +74,11 @@ const styles = StyleSheet.create({
         marginLeft: 15
     },
     item: {
-        width: 50,
-        height: 50
+        width: 80,
+        height: 80,
+        borderRadius: 10,
+        overflow: "hidden",
+        borderWidth: 0.1,
+        borderColor: "white"
     }
 });

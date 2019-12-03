@@ -74,7 +74,7 @@ export default class LoginScreen extends React.Component {
                             <Icon
                                 name={'ios-person'}
                                 size={dimensions.DEFAULT_ICON_SIZE}
-                                color={colors.loginIconColor}
+                                color={colors.darkIconColor}
                                 style={styles.inputIcon}
                             />
                             <TextInput
@@ -96,7 +96,7 @@ export default class LoginScreen extends React.Component {
                         <View style={styles.inputContainer}>
                             <Icon name={'ios-lock'}
                                   size={dimensions.DEFAULT_ICON_SIZE}
-                                  color={colors.loginIconColor}
+                                  color={colors.darkIconColor}
                                   style={styles.inputIcon}/>
 
                             <TextInput
@@ -119,7 +119,7 @@ export default class LoginScreen extends React.Component {
                                 onPress={this.showPassword.bind(this)}>
                                 <Icon name={this.state.showPassword === true ? 'ios-eye' : 'ios-eye-off'}
                                       size={dimensions.SMALL_ICON_SIZE}
-                                      color={colors.loginIconColor}/>
+                                      color={colors.darkIconColor}/>
                             </TouchableOpacity>
                         </View>
                     </View>

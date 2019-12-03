@@ -26,10 +26,10 @@ export default class Board extends React.Component {
                     <Card>
                         <CardItem header bordered>
                             <Left>
-                                <Text style={styles.lightTitle}>{this.state.name}</Text>
+                                <Text style={styles.boardTitle}>{this.state.name}</Text>
                             </Left>
                             <Right style={styles.container}>
-                                <TouchableOpacity style={{width: 26}} onPress={() => {
+                                <TouchableOpacity style={{width: dimensions.SMALL_ICON_SIZE}} onPress={() => {
                                     console.log(this.state.isFav);
                                     if (this.state.isFav === true)
                                         this.setState({
@@ -50,7 +50,7 @@ export default class Board extends React.Component {
                                     style={{marginLeft: 10}}
                                     name={'close'}
                                     size={dimensions.SMALL_ICON_SIZE - 5}
-                                    color={colors.loginIconColor}
+                                    color={colors.darkIconColor}
                                 />
                             </Right>
                         </CardItem>
@@ -69,21 +69,20 @@ export default class Board extends React.Component {
 const styles = StyleSheet.create({
     container: {
         justifyContent: "flex-end",
-        //alignItems: 'stretch',
         flex: 1,
         flexDirection: 'row',
     },
     text: {
         fontSize: fontSizes.titleSize,
-        color: colors.loginIconColor,
+        color: colors.textColor,
         fontWeight: 'bold',
         textAlign: 'center',
         marginLeft: 15
     },
-    lightTitle: {
+    boardTitle: {
         ...human.title3,
         ...systemWeights.semibold,
-        color: colors.loginIconColor,
+        color: colors.textColor,
         textAlign: 'center',
         marginLeft: 15
     }

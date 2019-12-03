@@ -2,9 +2,10 @@ import React from "react";
 import {View, StyleSheet, Text, ImageBackground, TouchableOpacity, FlatList, Alert} from "react-native";
 import colors from '../../config/colors';
 import dimensions from '../../config/dimensions';
-import Ionicons from "react-native-vector-icons/Ionicons";
-import empty_back from "../../assets/smile-1.png";
 import {human, systemWeights} from 'react-native-typography'
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+import sad_smile_back from "../../assets/sad-smile.png";
 import Board from "../helpers/Board";
 import Dishes from "../helpers/Dishes";
 import {ApiService} from "../../models/ApiService";
@@ -25,9 +26,9 @@ export default class FavouritesScreen extends React.Component {
         super(props);
         this.apiService = new ApiService();
         this.userId = this.props.navigation.dangerouslyGetParent().getParam('userId');
-        console.log("Fav userId " + this.userId);
         this.state = {
-            boards: [{dishes: [{id: 1, name: 'box1', backgroundColor: '#09f', color: '#fff'}]}]
+            boards: []
+            //[{dishes: [{id: 1, name: 'box1', backgroundColor: '#09f', color: '#fff'}]}]
         };
     }
 
@@ -49,7 +50,7 @@ export default class FavouritesScreen extends React.Component {
 
     renderBoards() {
         if (this.state.boards.length === 0) {
-            return <ImageBackground style={styles.backgroundContainer} source={empty_back}>
+            return <ImageBackground style={styles.backgroundContainer} source={sad_smile_back}>
                 <View style={styles.controlsContainer}>
                     <Text style={styles.lightTitle}>EMPTY LIST :(</Text>
                 </View>
@@ -57,14 +58,12 @@ export default class FavouritesScreen extends React.Component {
         } else {
             return <View style={styles.container}>
                 <FlatList
-                    style={{marginTop: -dimensions.WINDOW_HEIGHT / 10}}
+                    style={{marginTop: -dimensions.WINDOW_HEIGHT / 12 + 20}}
                     data={this.state.boards}
                     renderItem={
                         ({item}) => <Board name="TestBoard" body={<Dishes data={item.dishes}/>}/>
                     }
                     keyExtractor={(item, index) => item.toString()}
-                    /*onRefresh={() => this.renderRefreshControl()}
-                    refreshing={this.state.isLoading}*/
                     initialNumToRender={8}
                 />
             </View>
@@ -80,7 +79,7 @@ export default class FavouritesScreen extends React.Component {
 
 const styles = StyleSheet.create({
     backgroundContainer: {
-        justifyContent: "flex-start",
+        justifyContent: "center",
         alignItems: 'center',
         width: null,
         height: null,
@@ -99,11 +98,11 @@ const styles = StyleSheet.create({
     },
     controlsContainer: {
         marginBottom: 20,
-        paddingTop: dimensions.WINDOW_WIDTH - 50
+        paddingTop: dimensions.WINDOW_HEIGHT / 4
     },
     lightTitle: {
         ...human.title1,
-        ...systemWeights.semibold,
+        ...systemWeights.light,
         color: colors.activeBackColor,
         marginLeft: 15,
         marginTop: 20
