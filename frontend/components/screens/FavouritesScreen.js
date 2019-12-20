@@ -10,6 +10,7 @@ import Board from "../helpers/Board";
 import Dishes from "../helpers/Dishes";
 import {ApiService} from "../../models/ApiService";
 import {PacmanIndicator} from "react-native-indicators";
+import fontSizes from "../../config/fontSizes";
 
 export default class FavouritesScreen extends React.Component {
     static navigationOptions = {
@@ -74,12 +75,13 @@ export default class FavouritesScreen extends React.Component {
             return <ImageBackground style={styles.backgroundContainer} source={sad_smile_back}>
                 <View style={styles.controlsContainer}>
                     <Text style={styles.lightTitle}>EMPTY LIST :(</Text>
+                    <Text/>
+                    <Text style={styles.infoText}>You have no favourite boards yet.</Text>
                 </View>
             </ImageBackground>
         } else {
             return <View style={styles.container}>
                 <FlatList
-                    style={{marginTop: -dimensions.WINDOW_HEIGHT / 12 + 20}}
                     data={this.state.boards}
                     renderItem={
                         ({item}) => <Board id={item.id} isFav={item.favourite} name={item.name}
@@ -117,10 +119,20 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.screenBackgroundColor,
         flexDirection: 'column',
+        marginTop: 50
     },
     controlsContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center',
         marginBottom: 20,
         paddingTop: dimensions.WINDOW_HEIGHT / 4
+    },
+    infoText: {
+        fontSize: fontSizes.titleSize,
+        fontWeight: "200",
+        color: colors.textColor
     },
     lightTitle: {
         ...human.title1,

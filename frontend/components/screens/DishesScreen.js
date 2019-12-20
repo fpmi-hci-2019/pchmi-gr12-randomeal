@@ -72,11 +72,15 @@ export default class DishesScreen extends React.Component {
 
     _renderItem({item, index}) {
         return (
-            <Dish onPress={() => {
-                this.props.navigation.navigate('Recipe', {
-                    dishId: item.id
-                })
-            }} title={item.name} source={item.photoUrl}/>
+            <TouchableOpacity
+                onPress={() => {
+                    this.props.navigation.navigate('Recipe', {
+                        dishId: item.id
+                    })
+                }}
+            >
+                <Dish title={item.name} source={item.photoUrl}/>
+            </TouchableOpacity>
         )
     }
 
@@ -87,11 +91,14 @@ export default class DishesScreen extends React.Component {
         return (
             <SafeAreaView style={styles.container}>
                 <Carousel
+                    slideStyle={{marginTop: 20}}
+                    inactiveSlideOpacity={0.3}
                     layout={'stack'}
+                    layoutCardOffset={9}
                     data={this.state.dishes}
                     sliderWidth={dimensions.WINDOW_WIDTH}
-                    itemWidth={dimensions.WINDOW_WIDTH}
-                    itemHeight={dimensions.WINDOW_HEIGHT / 2}
+                    itemWidth={dimensions.WINDOW_WIDTH - 50}
+                    itemHeight={dimensions.WINDOW_HEIGHT / 2 + 50}
                     renderItem={this._renderItem}
                     onSnapToItem={index => this.setState({activeIndex: index})}
                 />
@@ -105,10 +112,11 @@ export default class DishesScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 3,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.white
+        backgroundColor: colors.white,
+        marginTop: 10
     },
     text: {
         fontSize: 20,
@@ -122,7 +130,7 @@ const styles = StyleSheet.create({
     loginBtn: {
         width: dimensions.WINDOW_WIDTH - 10,
         height: 45,
-        marginBottom: 40,
+        marginBottom: 50,
         borderRadius: dimensions.BORDER_RADIUS,
         backgroundColor: colors.btnBackgroundColor,
         justifyContent: 'center'

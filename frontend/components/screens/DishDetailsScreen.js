@@ -17,14 +17,15 @@ export default class DishDetailsScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.props.navigation.addListener('didFocus', this.onScreenFocus);
+        console.log(this.props.navigation.getParam('dishId'));
+        //this.props.navigation.addListener('didFocus', this.onScreenFocus);
     }
 
-    onScreenFocus = (dishId) => {
+    onScreenFocus = () => {
         this.setState({
             loading: true
         });
-        this.apiService.getDishById(dishId)
+        this.apiService.getDishById(this.props.navigation.getParam('dishId'))
             .then((response) => {
                 console.log("Received dish: " + JSON.stringify(response));
                 if (response === undefined || response.error) {
@@ -48,7 +49,7 @@ export default class DishDetailsScreen extends React.Component {
             return <PacmanIndicator color={colors.primaryColor} animating={this.state.loading}/>;
         }
         return (
-            <View style={[styles.container]}>
+            <View style={styles.container}>
                 <Text style={styles.text}>Dish details screen</Text>
             </View>
         );

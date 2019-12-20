@@ -1,5 +1,6 @@
 package pi.hci.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -9,6 +10,7 @@ import java.util.Date;
 
 @Data
 @Accessors(chain = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Board {
     private int id;
     @NotNull

@@ -1,9 +1,11 @@
 import React from "react";
-import {Alert, Image, StyleSheet, View} from "react-native";
+import {Alert, Image, StyleSheet, TouchableOpacity, View} from "react-native";
 import SortableGrid from "react-native-sortable-gridview";
 import plus_image from "../../assets/plus.jpg";
 import {ApiService} from "../../models/ApiService";
-import ActionSheet from "react-native-actionsheet";
+import dimensions from "../../config/dimensions";
+import colors from "../../config/colors";
+import Icon from "react-native-vector-icons/AntDesign";
 
 export default class Dishes extends React.Component {
 
@@ -15,16 +17,27 @@ export default class Dishes extends React.Component {
             lockData: this.props.lockData || [],
             navigation: this.props.nav || null
         };
-        this.optionArray = [
-            'View recipe',
-            'Add to favourites',
-            'Delete',
-            'Cancel'
-        ];
     }
 
-    showActionSheet = (item) => {
-        this.ActionSheet.show(item);
+    deleteDishFromBoard = (item, index) => {
+        let data = [...this.state.data];
+        data.splice(index, 1);
+        this.setState({
+            data,
+        });
+        console.log('Del' + item.id + item.name);
+        this.apiService.deleteDishFromBoard(this.state.navigation.getParam('boardId'), item.id)
+            .then((response) => {
+                console.log('Delete dish from the board: ' + JSON.stringify(response));
+                if (response === undefined || response.error) {
+                    Alert.alert("Error", "Unexpected error.");
+                } else {
+                    Alert.alert('Success!', item.name + " is deleted from your board");
+                }
+            })
+            .catch((error) => {
+                Alert.alert("Error", error);
+            });
     };
 
     render() {
@@ -32,18 +45,44 @@ export default class Dishes extends React.Component {
             <SortableGrid
                 data={this.state.data}
                 lockData={this.state.lockData}
-                onDragStart={() => {
-                    console.log('Default onDragStart');
-                }}
-                onDragRelease={(data) => {
-                    console.log('Default onDragRelease', data);
+                itemCoverStyle={{marginTop: -8, marginLeft: -8}}
+                renderItemCover={(item, index) => {
+                    return (
+                        <TouchableOpacity
+                            style={{width: dimensions.SMALL_ICON_SIZE}}
+                            onPress={() => {
+                                Alert.alert(
+                                    'Delete',
+                                    'Do you want to delete ' + item.name + "?",
+                                    [
+                                        {
+                                            text: 'Cancel',
+                                            onPress: () => console.log('Cancel Pressed'),
+                                            style: 'cancel',
+                                        },
+                                        {text: 'Yes', onPress: () => this.deleteDishFromBoard(item, index)},
+                                    ],
+                                    {cancelable: false},
+                                );
+                            }}
+                        >
+                            <Icon
+                                name={'closecircle'}
+                                size={dimensions.SMALL_ICON_SIZE - 3}
+                                color={colors.placeHolderColor}
+                            />
+                        </TouchableOpacity>
+                    )
                 }}
                 renderItem={(item, index) => {
                     return (
                         <View
                             uniqueKey={item.id}
                             onTap={() => {
-                                this.showActionSheet(item)
+                                this.state.navigation.navigate("Recipe",
+                                    {
+                                        dishId: item.id
+                                    });
                             }}
                             style={styles.item}
                         >
@@ -69,43 +108,6 @@ export default class Dishes extends React.Component {
                         >
                             <Image style={styles.item}
                                    source={(item.id === -1) ? plus_image : {uri: item.photoUrl}}/>
-                            <ActionSheet
-                                ref={o => (this.ActionSheet = o)}
-                                options={this.optionArray}
-                                cancelButtonIndex={3}
-                                destructiveButtonIndex={2}
-                                onPress={ind => {
-                                    switch (ind) {
-                                        case 0:
-                                            this.state.navigation.navigate("Recipe",
-                                                {
-                                                    dishId: item.id
-                                                });
-                                            break;
-                                        case 1:
-                                            console.log(item.id);
-                                            //this.apiService.setBoardIsFavourite()
-                                            break;
-                                        case 2:
-                                            console.log('Del' + item.id + item.name);
-                                            this.apiService.deleteDishFromBoard(this.state.navigation.getParam('boardId'), item.id)
-                                                .then((response) => {
-                                                    console.log('Delete dish from the board: ' + JSON.stringify(response));
-                                                    if (response === undefined || response.error) {
-                                                        Alert.alert("Error", "Unexpected error.");
-                                                    } else {
-                                                        Alert.alert('Success!', item.name + " is deleted from your board");
-                                                    }
-                                                })
-                                                .catch((error) => {
-                                                    Alert.alert("Error", error);
-                                                });
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }}
-                            />
                         </View>
                     )
                 }}
@@ -130,8 +132,8 @@ const styles = StyleSheet.create({
         marginLeft: 15
     },
     item: {
-        width: 80,
-        height: 80,
+        width: 90,
+        height: 90,
         borderRadius: 10,
         overflow: "hidden",
         borderWidth: 0.1,

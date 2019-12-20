@@ -84,4 +84,12 @@ export class ApiService {
         console.log('Delete dish ' + dishId + ' from the board ' + boardId);
         return this.apiClient.delete('boards/' + boardId + '/dishes/' + dishId);
     }
+
+    createBoard(name, userId) {
+        console.log('Create new board' + name);
+        return this.apiClient.post('boards/', {
+            name,
+            userId
+        });
+    }
 }

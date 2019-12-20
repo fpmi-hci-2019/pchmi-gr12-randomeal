@@ -15,10 +15,12 @@ public class DishByBoardService {
     private final DishMapper mapper;
 
     public int deleteDish(int boardId, int dishId) {
+        log.debug("Delete dish " + dishId + " from the board " + boardId);
         return dishDao.deleteDish(boardId, dishId);
     }
 
     public int addDishOnBoard(int boardId, int dishId) {
+        log.debug("Add dish " + dishId + " on the board " + boardId);
         return dishDao.addDishOnBoard(boardId, dishId);
     }
 }
