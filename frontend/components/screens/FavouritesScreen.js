@@ -1,5 +1,5 @@
 import React from "react";
-import {View, StyleSheet, Text, ImageBackground, TouchableOpacity, FlatList, Alert} from "react-native";
+import {Alert, FlatList, ImageBackground, StyleSheet, Text, View} from "react-native";
 import colors from '../../config/colors';
 import dimensions from '../../config/dimensions';
 import {human, systemWeights} from 'react-native-typography'
@@ -9,6 +9,7 @@ import sad_smile_back from "../../assets/sad-smile.png";
 import Board from "../helpers/Board";
 import Dishes from "../helpers/Dishes";
 import {ApiService} from "../../models/ApiService";
+import {PacmanIndicator} from "react-native-indicators";
 
 export default class FavouritesScreen extends React.Component {
     static navigationOptions = {
@@ -27,28 +28,48 @@ export default class FavouritesScreen extends React.Component {
         this.apiService = new ApiService();
         this.userId = this.props.navigation.dangerouslyGetParent().getParam('userId');
         this.state = {
-            boards: []
+            boards: [],
+            loading: true
             //[{dishes: [{id: 1, name: 'box1', backgroundColor: '#09f', color: '#fff'}]}]
         };
     }
+
+    componentDidMount() {
+        this.props.navigation.addListener('didFocus', this.onScreenFocus);
+    }
+
+    onScreenFocus = () => {
+        this.setState({
+            loading: true
+        });
+        this.getBoards(this.userId);
+    };
 
     getBoards = (userId) => {
         this.apiService.getAllFavBoardsForUser(userId)
             .then((response) => {
                 console.log("Received fav boards: " + JSON.stringify(response));
-                if (response.error) {
-                    Alert.alert("Error.", response.error);
+                if (response === undefined || response.error) {
+                    Alert.alert("Error", "Unexpected error.");
                     this.setState({
-                        boards: []
+                        boards: [],
+                        loading: false
                     });
                 } else
                     this.setState({
-                        boards: response
+                        boards: response,
+                        loading: false
                     });
+            })
+            .catch((error) => {
+                Alert.alert("Error", error);
             });
     };
 
     renderBoards() {
+        if (this.state.loading) {
+            return <PacmanIndicator color={colors.primaryColor} animating={this.state.loading}/>;
+        }
         if (this.state.boards.length === 0) {
             return <ImageBackground style={styles.backgroundContainer} source={sad_smile_back}>
                 <View style={styles.controlsContainer}>
@@ -61,7 +82,8 @@ export default class FavouritesScreen extends React.Component {
                     style={{marginTop: -dimensions.WINDOW_HEIGHT / 12 + 20}}
                     data={this.state.boards}
                     renderItem={
-                        ({item}) => <Board name="TestBoard" body={<Dishes data={item.dishes}/>}/>
+                        ({item}) => <Board id={item.id} isFav={item.favourite} name={item.name}
+                                           body={<Dishes lockData={item.dishes} nav={this.props.navigation}/>}/>
                     }
                     keyExtractor={(item, index) => item.toString()}
                     initialNumToRender={8}
@@ -106,5 +128,11 @@ const styles = StyleSheet.create({
         color: colors.activeBackColor,
         marginLeft: 15,
         marginTop: 20
+    },
+    testcontainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF'
     }
 });

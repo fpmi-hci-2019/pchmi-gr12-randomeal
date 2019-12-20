@@ -8,8 +8,9 @@ const colors = {
    textColorGray: '#C7C7CC',
    darkIconColor: '#273344',
    placeHolderColor: 'rgba(95, 103, 123, 0.5)',
-   inputBoxColor: '#E5575A',
+   inputBoxColor: '#FE4C34',
    shadowColor: '#343232',
-   activeBackColor: "#E5575A"
+   activeBackColor: "#E5575A",
+   orange: "#FE9934"
  };
 export default colors;

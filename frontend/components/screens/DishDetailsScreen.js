@@ -1,14 +1,52 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import {View, StyleSheet, Text, Alert} from "react-native";
 import colors from '../../config/colors';
+import Image from "react-native-web/src/exports/Image";
+import {ApiService} from "../../models/ApiService";
+import {PacmanIndicator} from "react-native-indicators";
 
 export default class DishDetailsScreen extends React.Component {
 
     constructor(props) {
         super(props);
+        this.apiService = new ApiService();
+        this.state = {
+            loading: true,
+            dish: {}
+        }
     }
 
+    componentDidMount() {
+        this.props.navigation.addListener('didFocus', this.onScreenFocus);
+    }
+
+    onScreenFocus = (dishId) => {
+        this.setState({
+            loading: true
+        });
+        this.apiService.getDishById(dishId)
+            .then((response) => {
+                console.log("Received dish: " + JSON.stringify(response));
+                if (response === undefined || response.error) {
+                    Alert.alert("Error", "Unexpected error.");
+                    this.setState({
+                        loading: false
+                    })
+                } else
+                    this.setState({
+                        dish: response,
+                        loading: false
+                    });
+            })
+            .catch((error) => {
+                Alert.alert("Error", error);
+            });
+    };
+
     render() {
+        if (this.state.loading) {
+            return <PacmanIndicator color={colors.primaryColor} animating={this.state.loading}/>;
+        }
         return (
             <View style={[styles.container]}>
                 <Text style={styles.text}>Dish details screen</Text>
@@ -19,7 +57,8 @@ export default class DishDetailsScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: "center",
+        justifyContent: "flex-start",
+        alignItems: 'stretch',
         flex: 1,
         backgroundColor: colors.screenBackgroundColor
     },

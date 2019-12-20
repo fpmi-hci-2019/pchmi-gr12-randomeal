@@ -35,13 +35,53 @@ export class ApiService {
         return this.apiClient.get('boards?userId=' + userId + '&filterBy=fav');
     }
 
-    setIsFavourite(boardId) {
+    setBoardIsFavourite(boardId) {
         console.log("Set isFavourite for board " + boardId);
         return this.apiClient.put('boards/' + boardId + '/fav');
+    }
+
+    getBoardIsFavourite(boardId) {
+        console.log("Get isFavourite for board " + boardId);
+        return this.apiClient.get('boards/' + boardId + '/fav');
+    }
+
+    setDishIsFavourite(dishId) {
+        console.log("Set isFavourite for dish " + dishId);
+        return this.apiClient.put('dishes/' + dishId + '/fav');
+    }
+
+    getDishIsFavourite(dishId) {
+        console.log("Get isFavourite for dish " + dishId);
+        return this.apiClient.get('dishes/' + dishId + '/fav');
     }
 
     deleteBoard(boardId) {
         console.log("Delete board " + boardId);
         return this.apiClient.delete('boards/' + boardId + '/fav');
+    }
+
+    getBoard(boardId) {
+        console.log('Get board by id ' + boardId);
+        return this.apiClient.get('boards/' + boardId)
+    }
+
+    getAllDishes() {
+        console.log('Get all dishes');
+        return this.apiClient.get('dishes/');
+    }
+
+    getDishById(dishId) {
+        console.log('Get dish by id: ' + dishId);
+        return this.apiClient.get('dishes/' + dishId);
+    }
+
+    addDishOnBoard(boardId, dishId) {
+        console.log('Add dish ' + dishId + ' on the board ' + boardId);
+        return this.apiClient.post('boards/' + boardId + '/dishes/' + dishId);
+    }
+
+    deleteDishFromBoard(boardId, dishId) {
+        console.log('Delete dish ' + dishId + ' from the board ' + boardId);
+        return this.apiClient.delete('boards/' + boardId + '/dishes/' + dishId);
     }
 }

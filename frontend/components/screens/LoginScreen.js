@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         fontSize: fontSizes.bodySmallSize,
         paddingLeft: 45,
-        borderColor: colors.inputBoxColor,
+        borderColor: colors.activeBackColor,
         marginHorizontal: 25
     },
     inputIcon: {

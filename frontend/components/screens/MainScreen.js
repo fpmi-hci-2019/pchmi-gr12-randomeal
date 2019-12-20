@@ -1,15 +1,16 @@
 import React from "react";
-import {Alert, Button, ImageBackground, StyleSheet, Text, View, FlatList, TouchableOpacity} from "react-native";
+import {Alert, FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import colors from '../../config/colors';
 import dimensions from '../../config/dimensions';
-import fontSizes from '../../config/fontSizes';
-import {human, systemWeights} from 'react-native-typography'
 import Icon from "react-native-vector-icons/Ionicons";
 import {ApiService} from "../../models/ApiService";
+import empty_back from "../../assets/smile-1.png";
 import Board from "../helpers/Board";
 import Dishes from "../helpers/Dishes";
-import empty_back from "../../assets/smile-1.png";
+import fontSizes from "../../config/fontSizes";
+import {human, systemWeights} from "react-native-typography";
+import {PacmanIndicator} from "react-native-indicators";
 
 export default class MainScreen extends React.Component {
     static navigationOptions = {
@@ -33,76 +34,49 @@ export default class MainScreen extends React.Component {
         this.userId = this.props.navigation.dangerouslyGetParent().dangerouslyGetParent().getParam('userId');
         console.log("userId" + this.userId);
         this.state = {
-            boards: [
-                {
-                    dishes: [
-                        {
-                            id: 1,
-                            name: 'box1',
-                            backgroundColor: '#09f',
-                            color: '#fff',
-                            photoUrl: 'https://cdn.pixabay.com/photo/2018/03/29/12/19/oats-3272113_1280.jpg'
-                        },
-                        {
-                            id: 2,
-                            name: 'box2',
-                            backgroundColor: '#09f',
-                            color: '#fff',
-                            photoUrl: 'https://cdn.pixabay.com/photo/2016/10/14/18/21/tee-1740871_1280.jpg'
-                        },
-                        {
-                            id: 3,
-                            name: 'box3',
-                            backgroundColor: '#09f',
-                            color: '#fff',
-                            photoUrl: 'https://cdn.pixabay.com/photo/2016/11/17/22/53/biscuit-1832917_1280.jpg'
-                        },
-                        {
-                            id: 4,
-                            name: 'box4',
-                            backgroundColor: '#09f',
-                            color: '#fff',
-                            photoUrl: 'https://cdn.pixabay.com/photo/2015/05/31/13/59/salad-791891_1280.jpg'
-                        },
-                        {
-                            id: 5,
-                            name: 'box5',
-                            backgroundColor: '#09f',
-                            color: '#fff',
-                            photoUrl: 'https://cdn.pixabay.com/photo/2016/11/01/11/37/soup-1787997_1280.jpg'
-                        },
-                        {
-                            id: 6,
-                            name: 'box6',
-                            backgroundColor: '#09f',
-                            color: '#fff',
-                            photoUrl: 'https://cdn.pixabay.com/photo/2016/08/23/15/52/fresh-orange-juice-1614822_1280.jpg'
-                        }]
-                },
-            ],
-            isLoading: false
+            boards: [],
+            isLoading: false,
+            loading: true,
+            requestIsLoading: true
         };
-        //this.getBoards(this.userId);
     }
 
     renderRefreshControl() {
         this.state.isLoading ? this.setState({isLoading: false}) : this.setState({isLoading: true});
     }
 
+    componentDidMount() {
+        this.props.navigation.addListener('didFocus', this.onScreenFocus);
+    }
+
+    onScreenFocus = () => {
+        this.setState({
+            loading: true
+        });
+        this.getBoards(this.userId);
+    };
+
     getBoards = (userId) => {
         this.apiService.getAllBoardsForUser(userId)
             .then((response) => {
                 console.log("Received boards: " + JSON.stringify(response));
-                if (response.error) {
-                    Alert.alert("Error.", response.error);
+                if (response === undefined || response.error) {
+                    Alert.alert("Error", "Unexpected error.");
                     this.setState({
-                        boards: []
+                        boards: [],
+                        loading: false
                     });
                 } else
                     this.setState({
-                        boards: response
+                        boards: response,
+                        loading: false
                     });
-            });
+            }).catch((error) => {
+            Alert.alert("Error", error);
+            this.setState({
+                loading: false
+            })
+        });
     };
 
     renderBoards() {
@@ -119,7 +93,17 @@ export default class MainScreen extends React.Component {
                     style={{marginTop: -dimensions.WINDOW_HEIGHT / 10}}
                     data={this.state.boards}
                     renderItem={
-                        ({item}) => <Board name="TestBoard" body={<Dishes data={item.dishes}/>}/>
+                        ({item}) => <TouchableOpacity
+                            onPress={() => {
+                                this.props.navigation.navigate("BoardInfo",
+                                    {
+                                        boardId: item.id
+                                    });
+                            }}
+                        >
+                            <Board isFav={item.favourite} id={item.id} name="TestBoard"
+                                   body={<Dishes lockData={item.dishes} nav={this.props.navigation}/>}/>
+                        </TouchableOpacity>
                     }
                     keyExtractor={(item, index) => item.toString()}
                     onRefresh={() => this.renderRefreshControl()}
@@ -131,6 +115,9 @@ export default class MainScreen extends React.Component {
     }
 
     render() {
+        if (this.state.loading) {
+            return <PacmanIndicator color={colors.primaryColor} animating={this.state.loading}/>;
+        }
         return (
             this.renderBoards()
         );

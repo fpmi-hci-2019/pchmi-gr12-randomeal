@@ -1,20 +1,33 @@
 import React from "react";
-import {Alert, View, StyleSheet, Text, Image} from "react-native";
+import {Alert, Image, StyleSheet, View} from "react-native";
 import SortableGrid from "react-native-sortable-gridview";
-import colors from "../../config/colors";
+import plus_image from "../../assets/plus.jpg";
+import {ApiService} from "../../models/ApiService";
+import ActionSheet from "react-native-actionsheet";
 
 export default class Dishes extends React.Component {
 
     constructor(props) {
         super(props);
+        this.apiService = new ApiService();
         this.state = {
             data: this.props.data || [],
-            lockData: this.props.lockData || []
-        }
+            lockData: this.props.lockData || [],
+            navigation: this.props.nav || null
+        };
+        this.optionArray = [
+            'View recipe',
+            'Add to favourites',
+            'Delete',
+            'Cancel'
+        ];
     }
 
+    showActionSheet = (item) => {
+        this.ActionSheet.show(item);
+    };
+
     render() {
-        console.log(this.props.data);
         return (
             <SortableGrid
                 data={this.state.data}
@@ -30,7 +43,7 @@ export default class Dishes extends React.Component {
                         <View
                             uniqueKey={item.id}
                             onTap={() => {
-                                Alert.alert(`On Tap ${item.name}!`);
+                                this.showActionSheet(item)
                             }}
                             style={styles.item}
                         >
@@ -44,12 +57,55 @@ export default class Dishes extends React.Component {
                         <View
                             uniqueKey={item.id}
                             onTap={() => {
-                                Alert.alert(`On Tap ${item.name}!`);
+                                if (item.id === -1) {
+                                    this.state.navigation.navigate("Dishes",
+                                        {
+                                            dishId: item.id,
+                                            boardId: this.state.navigation.getParam('boardId')
+                                        });
+                                }
                             }}
                             style={[styles.item]}
                         >
                             <Image style={styles.item}
-                                   source={{uri: item.photoUrl}}/>
+                                   source={(item.id === -1) ? plus_image : {uri: item.photoUrl}}/>
+                            <ActionSheet
+                                ref={o => (this.ActionSheet = o)}
+                                options={this.optionArray}
+                                cancelButtonIndex={3}
+                                destructiveButtonIndex={2}
+                                onPress={ind => {
+                                    switch (ind) {
+                                        case 0:
+                                            this.state.navigation.navigate("Recipe",
+                                                {
+                                                    dishId: item.id
+                                                });
+                                            break;
+                                        case 1:
+                                            console.log(item.id);
+                                            //this.apiService.setBoardIsFavourite()
+                                            break;
+                                        case 2:
+                                            console.log('Del' + item.id + item.name);
+                                            this.apiService.deleteDishFromBoard(this.state.navigation.getParam('boardId'), item.id)
+                                                .then((response) => {
+                                                    console.log('Delete dish from the board: ' + JSON.stringify(response));
+                                                    if (response === undefined || response.error) {
+                                                        Alert.alert("Error", "Unexpected error.");
+                                                    } else {
+                                                        Alert.alert('Success!', item.name + " is deleted from your board");
+                                                    }
+                                                })
+                                                .catch((error) => {
+                                                    Alert.alert("Error", error);
+                                                });
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }}
+                            />
                         </View>
                     )
                 }}

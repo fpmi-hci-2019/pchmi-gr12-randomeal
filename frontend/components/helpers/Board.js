@@ -1,20 +1,23 @@
 import React from "react";
-import {Container, Header, Content, Card, CardItem, Text, Body, Left, Right} from "native-base"
-import {StyleSheet, TouchableOpacity} from "react-native";
-import colors from "../../config/colors";
+import {Body, Card, CardItem, Container, Content, Header, Left, Right, Text} from "native-base"
+import {Alert, StyleSheet, TouchableOpacity} from "react-native";
+import Icon from "react-native-vector-icons/AntDesign";
 import dimensions from "../../config/dimensions";
+import colors from "../../config/colors";
+import {ApiService} from "../../models/ApiService";
 import fontSizes from "../../config/fontSizes";
-import {human, systemWeights} from 'react-native-typography'
-import Icon from 'react-native-vector-icons/AntDesign'
+import {human, systemWeights} from "react-native-typography/src";
 
 export default class Board extends React.Component {
 
     constructor(props) {
         super(props);
+        this.apiService = new ApiService();
         this.state = {
             name: this.props.name || "",
             body: this.props.body || <Text>No data</Text>,
-            isFav: false
+            isFav: this.props.isFav,
+            id: this.props.id
         }
     }
 
@@ -31,13 +34,24 @@ export default class Board extends React.Component {
                             <Right style={styles.container}>
                                 <TouchableOpacity style={{width: dimensions.SMALL_ICON_SIZE}} onPress={() => {
                                     console.log(this.state.isFav);
-                                    if (this.state.isFav === true)
-                                        this.setState({
-                                            isFav: false
-                                        });
-                                    else
-                                        this.setState({
-                                            isFav: true
+                                    this.apiService.setBoardIsFavourite(this.state.id)
+                                        .then(() => {
+                                            this.apiService.getBoardIsFavourite(this.state.id)
+                                                .then((response) => {
+                                                    console.log(response);
+                                                    if (response === undefined || response.error)
+                                                        Alert.alert("Cannot add/delete!", "Add/delete from fav failed.");
+                                                    else
+                                                        this.setState({
+                                                            isFav: response
+                                                        });
+                                                })
+                                                .catch((error) => {
+                                                    Alert.alert("Error", error);
+                                                })
+                                        })
+                                        .catch((error) => {
+                                            Alert.alert("Error", error);
                                         });
                                 }}>
                                     <Icon
@@ -46,12 +60,16 @@ export default class Board extends React.Component {
                                         color={colors.primaryColor}
                                     />
                                 </TouchableOpacity>
-                                <Icon
-                                    style={{marginLeft: 10}}
-                                    name={'close'}
-                                    size={dimensions.SMALL_ICON_SIZE - 5}
-                                    color={colors.darkIconColor}
-                                />
+                                <TouchableOpacity style={{width: dimensions.SMALL_ICON_SIZE}} onPress={() => {
+                                    this.apiService.deleteBoard(this.state.id);
+                                }}>
+                                    <Icon
+                                        style={{marginLeft: 10}}
+                                        name={'close'}
+                                        size={dimensions.SMALL_ICON_SIZE - 5}
+                                        color={colors.darkIconColor}
+                                    />
+                                </TouchableOpacity>
                             </Right>
                         </CardItem>
                         <CardItem bordered>
