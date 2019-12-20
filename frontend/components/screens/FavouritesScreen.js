@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.screenBackgroundColor,
         flexDirection: 'column',
+        marginTop: 30
     },
     container: {
         justifyContent: "flex-start",

@@ -1,5 +1,5 @@
 import React from "react";
-import {ImageBackground, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {ImageBackground, Alert, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 
 import colors from '../../config/colors';
 import dimensions from '../../config/dimensions';
@@ -18,10 +18,10 @@ export default class LoginScreen extends React.Component {
     _login = () => {
         const email = this.state.email;
         const password = this.state.password;
-        /*this.apiService.login(email, password)
+        this.apiService.login(email, password)
             .then((response) => {
-                console.log(response);
-                if (response.error)
+                console.log(JSON.stringify(response));
+                if (response === undefined || response.error)
                     Alert.alert("Invalid credentials!", "Your email or password is invalid.");
                 else
                     this.props.navigation.navigate("Main", {
@@ -30,10 +30,6 @@ export default class LoginScreen extends React.Component {
             })
             .catch((error) => {
                 Alert.alert("Error", "Unexpected error!");
-            });*/
-        this.props.navigation.navigate("Main",
-            {
-                userId: 1
             });
     };
 
@@ -132,9 +128,20 @@ export default class LoginScreen extends React.Component {
                         <Text style={styles.text} onPress={() => this._login()}> Login </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{flex: 1, marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}} onPress={() => this._demo()}>
-                        <Text style={{fontSize: fontSizes.bodySize, color: colors.placeHolderColor}}>Don't have an account yet?</Text>
-                        <Text style={{textDecorationLine: 'underline', fontSize: fontSizes.bodySize, color: colors.primaryColor}}> Try demo</Text>
+                    <TouchableOpacity style={{
+                        flex: 1,
+                        marginTop: 30,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }} onPress={() => this._demo()}>
+                        <Text style={{fontSize: fontSizes.bodySize, color: colors.placeHolderColor}}>Don't have an
+                            account yet?</Text>
+                        <Text style={{
+                            textDecorationLine: 'underline',
+                            fontSize: fontSizes.bodySize,
+                            color: colors.primaryColor
+                        }}> Try demo</Text>
                     </TouchableOpacity>
                 </ImageBackground>
             </KeyboardAvoidingView>
@@ -152,7 +159,7 @@ const styles = StyleSheet.create({
     },
     controlsContainer: {
         marginBottom: 20,
-        paddingTop: dimensions.WINDOW_HEIGHT/2 + 70
+        paddingTop: dimensions.WINDOW_HEIGHT / 2 + 70
     },
     input: {
         width: dimensions.WINDOW_WIDTH - 55,

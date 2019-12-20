@@ -14,7 +14,7 @@ export default class DishesScreen extends React.Component {
         let dish = this.state.dishes[this.state.activeIndex];
         this.apiService.addDishOnBoard(this.boardId, dish.id)
             .then((response) => {
-                console.log("Add dish on the board: " + JSON.stringify(response));
+                console.log("Add dish on the board: " + response);
                 if (response === undefined || response.error) {
                     Alert.alert("Error", "Unexpected error.");
                 } else {
@@ -93,7 +93,7 @@ export default class DishesScreen extends React.Component {
                 <Carousel
                     slideStyle={{marginTop: 20}}
                     inactiveSlideOpacity={0.3}
-                    layout={'stack'}
+                    layout={'default'}
                     layoutCardOffset={9}
                     data={this.state.dishes}
                     sliderWidth={dimensions.WINDOW_WIDTH}
