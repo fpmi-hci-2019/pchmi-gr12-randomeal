@@ -48,11 +48,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<User> login(@RequestBody UserWithPassword user) {
+    public ResponseEntity<Id> login(@RequestBody UserWithPassword user) {
         try {
             User loggedUser = userService.login(user);
             log.debug("User {} successfully logged in.", loggedUser.getUsername());
-            return new ResponseEntity<>(loggedUser, HttpStatus.OK);
+            Id result = new Id(loggedUser.getId());
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception ex) {
             log.debug("Login failed: {}", ex.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Login failed.", ex);

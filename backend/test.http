@@ -73,7 +73,7 @@ Content-Type: application/json
 
 ###
 
-GET http://192.168.100.3:8080/randomeal/v1/boards/1
+GET localhost:8080/randomeal/v1/boards?userId=1
 Content-Type: application/json
 
 ###

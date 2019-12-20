@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 public class BoardDto {
     private int id;
     private String name;
-    private Date createdAt;
+    private Timestamp createdAt;
     private Timestamp changedAt;
     private boolean isFavourite;
     private int userId;

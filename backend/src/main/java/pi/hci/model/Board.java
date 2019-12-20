@@ -15,7 +15,7 @@ public class Board implements Comparable<Board> {
     private int id;
     @NotNull
     private String name;
-    private LocalDate createdAt;
+    private Date createdAt;
     private Date changedAt;
     private boolean isFavourite;
     @NotNull

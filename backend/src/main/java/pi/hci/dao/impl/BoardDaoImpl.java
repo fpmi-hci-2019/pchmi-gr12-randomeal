@@ -35,7 +35,7 @@ public class BoardDaoImpl implements BoardDao {
         return jdbcTemplate.query(onlyFav ? SELECT_ALL_FAVOURITE_BOARDS_FOR_USER : SELECT_ALL_BOARDS_FOR_USER, parameters, (rs, rowNum) ->
                 new BoardDto()
                         .setId(rs.getInt("id"))
-                        .setCreatedAt(rs.getDate("created_at"))
+                        .setCreatedAt(rs.getTimestamp("created_at"))
                         .setName(rs.getString("name"))
                         .setChangedAt(rs.getTimestamp("changed_at"))
                         .setFavourite(rs.getBoolean("is_favourite"))
@@ -51,7 +51,7 @@ public class BoardDaoImpl implements BoardDao {
         return jdbcTemplate.queryForObject(SELECT_BOARD_BY_ID, parameters, (rs, rowNum) ->
                 new BoardDto()
                         .setId(rs.getInt("id"))
-                        .setCreatedAt(rs.getDate("created_at"))
+                        .setCreatedAt(rs.getTimestamp("created_at"))
                         .setName(rs.getString("name"))
                         .setChangedAt(rs.getTimestamp("changed_at"))
                         .setFavourite(rs.getBoolean("is_favourite"))

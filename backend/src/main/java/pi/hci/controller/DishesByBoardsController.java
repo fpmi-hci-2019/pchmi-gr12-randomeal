@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import pi.hci.model.Id;
 import pi.hci.service.DishByBoardService;
 
 @Slf4j
@@ -31,11 +32,11 @@ public class DishesByBoardsController {
     }
 
     @RequestMapping(value = "/{dishId}", method = RequestMethod.POST)
-    public ResponseEntity<HttpStatus> addDishOnBoard(@PathVariable int boardId,
-                                                     @PathVariable int dishId) {
+    public ResponseEntity<Id> addDishOnBoard(@PathVariable int boardId,
+                                             @PathVariable int dishId) {
         try {
             dishService.addDishOnBoard(boardId, dishId);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(new Id(dishId), HttpStatus.OK);
         } catch (Exception ex) {
             log.debug("Exception while adding dish<id={}> on board<id={}>: {}", dishId, boardId, ex.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't add the dish " + dishId + " on the board: " + boardId, ex);
