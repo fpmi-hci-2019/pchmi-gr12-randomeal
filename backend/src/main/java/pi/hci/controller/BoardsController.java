@@ -82,7 +82,7 @@ public class BoardsController {
         try {
             return new ResponseEntity<>(boardService.getBoardById(boardId), HttpStatus.OK);
         } catch (Exception ex) {
-            log.debug("Exception while deleting board <id={}>: {}", boardId, ex.getMessage());
+            log.debug("Exception while getting board <id={}>: {}", boardId, ex.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't get the board: " + boardId, ex);
         }
     }

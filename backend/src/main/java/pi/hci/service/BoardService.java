@@ -32,7 +32,7 @@ public class BoardService {
 
     public BoardWithDishes getBoardById(int boardId) {
         log.debug("Getting board <id={}>", boardId);
-        BoardWithDishes board = mapper.fromDtoWithDishes(boardDao.getBoardById(boardId));
+        BoardWithDishes board = mapper.fromDto(boardDao.getBoardById(boardId));
         board.setDishes(dishService.getAllDishesForBoard(boardId));
         return board;
     }

@@ -11,7 +11,7 @@ import java.util.List;
 public interface BoardMapper {
     BoardDto toDto(Board board);
 
-    Board fromDto(BoardDto dto);
+    BoardWithDishes fromDto(BoardDto dto);
 
     List<BoardDto> toDtoList(List<Board> boards);
 
@@ -20,8 +20,6 @@ public interface BoardMapper {
     BoardDto toDtoWithDishes(BoardWithDishes board);
 
     List<BoardDto> toDtoListWithDishes(List<BoardWithDishes> boards);
-
-    BoardWithDishes fromDtoWithDishes(BoardDto dto);
 
     List<BoardWithDishes> fromDtoListWithDishes(List<BoardDto> dto);
 }

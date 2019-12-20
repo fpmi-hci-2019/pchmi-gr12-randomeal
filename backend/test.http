@@ -23,12 +23,12 @@ Content-Type: application/json
 
 {
   "email": "test1",
-  "password": "test"
+  "password": "test1"
 }
 
 ###
 
-GET localhost:8080/randomeal/v1/boards?userId=3
+GET localhost:8080/randomeal/v1/boards?userId=1
 Content-Type: application/json
 
 ###
@@ -43,12 +43,37 @@ Content-Type: application/json
 
 ###
 
-PUT localhost:8080/randomeal/v1/boards/3/fav
+PUT localhost:8080/randomeal/v1/boards/1/fav
 Content-Type: application/json
 
 ###
 
 DELETE localhost:8080/randomeal/v1/boards/3
+Content-Type: application/json
+
+###
+
+GET localhost:8080/randomeal/v1/dishes/1
+Content-Type: application/json
+
+###
+
+GET localhost:8080/randomeal/v1/dishes/
+Content-Type: application/json
+
+###
+
+DELETE localhost:8080/randomeal/v1/boards/1/dishes/1
+Content-Type: application/json
+
+###
+
+POST localhost:8080/randomeal/v1/boards/1/dishes/1
+Content-Type: application/json
+
+###
+
+GET http://192.168.100.3:8080/randomeal/v1/boards/1
 Content-Type: application/json
 
 ###

@@ -11,7 +11,7 @@ import java.util.List;
 public interface DishMapper {
     DishDto toDto(Dish dish);
 
-    Dish fromDto(DishDto dto);
+    DishWithIngredients fromDto(DishDto dto);
 
     List<DishDto> toDtoList(List<Dish> dishes);
 
