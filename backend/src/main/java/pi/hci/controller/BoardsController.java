@@ -11,6 +11,7 @@ import pi.hci.model.BoardWithDishes;
 import pi.hci.model.Id;
 import pi.hci.service.BoardService;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -37,6 +38,7 @@ public class BoardsController {
                                                                       @RequestParam(required = false) String filterBy) {
         try {
             List<BoardWithDishes> boards = boardService.getAllBoardsForUser(userId, filterBy);
+            boards.sort(Comparator.naturalOrder());
             log.debug("All boards for user <id={}> : {}.", userId, boards);
             return new ResponseEntity<>(boards, HttpStatus.OK);
         } catch (Exception ex) {

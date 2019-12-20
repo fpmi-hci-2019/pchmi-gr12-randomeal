@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     },
     controlsContainer: {
         marginBottom: 20,
-        paddingTop: dimensions.WINDOW_HEIGHT/2 + 50
+        paddingTop: dimensions.WINDOW_HEIGHT/2 + 70
     },
     input: {
         width: dimensions.WINDOW_WIDTH - 55,

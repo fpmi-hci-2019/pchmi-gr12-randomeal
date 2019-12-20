@@ -87,7 +87,7 @@ export default class FavouritesScreen extends React.Component {
                         ({item}) => <Board id={item.id} isFav={item.favourite} name={item.name}
                                            body={<Dishes lockData={item.dishes} nav={this.props.navigation}/>}/>
                     }
-                    keyExtractor={(item, index) => item.toString()}
+                    keyExtractor={(item) => item.id.toString(2)}
                     initialNumToRender={8}
                 />
             </View>

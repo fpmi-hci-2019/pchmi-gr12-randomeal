@@ -1,9 +1,11 @@
 import React from "react";
-import {View, StyleSheet, Text, Alert} from "react-native";
+import {Alert, Image, StyleSheet, Text, View} from "react-native";
 import colors from '../../config/colors';
-import Image from "react-native-web/src/exports/Image";
 import {ApiService} from "../../models/ApiService";
 import {PacmanIndicator} from "react-native-indicators";
+import dimensions from "../../config/dimensions";
+import {human, systemWeights} from "react-native-typography";
+import fontSizes from "../../config/fontSizes";
 
 export default class DishDetailsScreen extends React.Component {
 
@@ -18,7 +20,7 @@ export default class DishDetailsScreen extends React.Component {
 
     componentDidMount() {
         console.log(this.props.navigation.getParam('dishId'));
-        //this.props.navigation.addListener('didFocus', this.onScreenFocus);
+        this.props.navigation.addListener('didFocus', this.onScreenFocus);
     }
 
     onScreenFocus = () => {
@@ -50,23 +52,56 @@ export default class DishDetailsScreen extends React.Component {
         }
         return (
             <View style={styles.container}>
-                <Text style={styles.text}>Dish details screen</Text>
+                <Text style={styles.lightTitle}>                   {this.state.dish.name}</Text>
+                <Image
+                    source={{uri: this.state.dish.photoUrl}}
+                    style={{
+                        marginTop: 20,
+                        height: 250,
+                        width: dimensions.WINDOW_WIDTH,
+                    }}/>
+                <View style={{ marginLeft: 20, flex: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start'}}>
+                    <Text style={styles.infoText}>{this.state.dish.description}</Text>
+                </View>
             </View>
         );
     }
 }
 
+/*<View style={styles.dishInfoContainer}>
+                    <Icon
+                        name={'clockcircle'}
+                        size={dimensions.SMALL_ICON_SIZE}
+                        color={colors.primaryColor}
+                    />
+                    <Text style={styles.infoText}>{this.state.dish.cookingTime}</Text>
+                </View>*/
+
 const styles = StyleSheet.create({
     container: {
         justifyContent: "flex-start",
-        alignItems: 'stretch',
-        flex: 1,
-        backgroundColor: colors.screenBackgroundColor
+        alignItems: 'flex-start',
+        flex: 3,
+        backgroundColor: colors.white,
+        flexDirection: 'column',
+        marginTop: 20
     },
-    text: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginLeft: 15
-    }
+    dishInfoContainer: {
+        justifyContent: "space-between",
+        alignItems: 'flex-start',
+        flex: 1,
+        backgroundColor: colors.white,
+        flexDirection: 'row'
+    },
+    lightTitle: {
+        ...human.title1,
+        ...systemWeights.light,
+        color: colors.activeBackColor
+    },
+    infoText: {
+        marginTop: 20,
+        fontSize: fontSizes.titleSize,
+        fontWeight: "normal",
+        color: colors.textColor
+    },
 });

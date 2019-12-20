@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Board {
+public class Board implements Comparable<Board> {
     private int id;
     @NotNull
     private String name;
@@ -20,4 +20,9 @@ public class Board {
     private boolean isFavourite;
     @NotNull
     private int userId;
+
+    @Override
+    public int compareTo(Board o) {
+        return this.createdAt.compareTo(o.getCreatedAt());
+    }
 }
