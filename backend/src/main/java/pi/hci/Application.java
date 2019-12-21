@@ -1,4 +1,4 @@
-package gr12.hci;
+package pi.hci;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
