@@ -2,3 +2,5 @@
 2. [Информационная архитектура и оценка ранних концепций](https://drive.google.com/drive/folders/1IaxTIqRllMrZt8FX3gMl6jmQkEZJcJNV)
 3. [Концептуальное проектирование(раскадровки и дизайн-макеты)](https://drive.google.com/drive/folders/1IaxTIqRllMrZt8FX3gMl6jmQkEZJcJNV)
 4. [Концептуальной проектирование: разработка интерактивного прототипа интерфейса](https://drive.google.com/open?id=1nVl6G7u-SXmr18ZBOIMbS7GgBlbzW3FBvfDFT_4vFVM)
+5. [Лабораторная работа 5] (https://docs.google.com/document/d/1v0V8LhfOtm05G_28ScU1WGKCl11nynjT9nR2ETIagfI/edit) 
+6. [Финальный отчет (+6, 7 лабораторные)] (https://docs.google.com/document/d/1q1aVjrJpBE2y9gMAcAiI1twEB7lh63rIqcvEkBnZQz4/edit)
